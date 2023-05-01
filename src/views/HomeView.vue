@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="center">
     <img src="../assets/img/logo/TU_logo.png" />
-    <br>
+    <br />
     <span>wellcome</span>
     <h1>TU together</h1>
   </div>
@@ -26,5 +26,11 @@ label,
 input {
   display: inline-block;
   vertical-align: middle;
+}
+div {
+  text-align: center;
+}
+img {
+  max-width: 10%;
 }
 </style>
