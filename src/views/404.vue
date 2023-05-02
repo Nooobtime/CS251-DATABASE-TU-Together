@@ -1,6 +1,4 @@
-
 <template>
-  <NavBar />
   <div class="container">
     <div class="centered-element">
         <span>
