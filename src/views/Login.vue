@@ -39,8 +39,8 @@ export default {
         const response = await axios.post(
           'https://restapi.tu.ac.th/api/v1/auth/Ad/verify2',
           {
-            username: this.username,
-            password: this.password
+            UserName: this.username,
+            PassWord: this.password
           },
           {
             headers: {
@@ -51,6 +51,7 @@ export default {
         )
 
         let data = response.data
+        this.$router.push('/');
         console.log(data)
         // Handle successful login
       } catch (error) {
