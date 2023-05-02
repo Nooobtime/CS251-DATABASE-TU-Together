@@ -1,12 +1,12 @@
+
 <template>
+  <NavBar />
   <div class="container">
     <div class="centered-element">
         <span>
             404 Not Found
             <br>
-            Redirecting to Home page
-            <br>
-            in {{countdown}} seconds...
+            Redirecting in {{countdown}} seconds...
         </span>
     </div>
   </div>
