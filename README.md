@@ -17,5 +17,6 @@ npm run build
 # database
 
 https://www.phpmyadmin.co/
-user     : 'sql12615707',
-password : 'qfAAk96pTa',
+Server: sql12.freemysqlhosting.net
+user     : sql12615707
+password : qfAAk96pTa
