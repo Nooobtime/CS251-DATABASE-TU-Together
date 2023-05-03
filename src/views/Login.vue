@@ -20,6 +20,7 @@
               <input type="text" class="form-control" id="password" v-model="password" required />
             </div>
             <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+            <p v-if="error" style="color: red">{{ error }}</p>
           </form>
         </div>
       </div>
