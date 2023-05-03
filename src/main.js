@@ -11,5 +11,7 @@ app.component('NavBar', NavBar)
 app.component('Footer', Footer)
 app.use(axios)
 app.use(VueCookie)
+
 app.use(router)
+
 app.mount('#app')
