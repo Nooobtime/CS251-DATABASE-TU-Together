@@ -12,9 +12,9 @@
 <style>
 .container {
   display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center; /* center vertically */
-  height: 100vh; /* set the height of the container to the height of the viewport */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 span {
   font-size: 100px;
@@ -24,11 +24,11 @@ span {
 export default {
   data() {
     return {
-      countdown: 5 // set the initial countdown value to 5
+      // set the initial countdown value to 5
+      countdown: 5 
     }
   },
   mounted() {
-    // start the countdown timer when the component is mounted
     setInterval(() => {
       if (this.countdown > 1) {
         this.countdown--

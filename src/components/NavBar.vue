@@ -11,6 +11,7 @@ import VueCookie from 'vue-cookie'
 export default {
   methods: {
     logout() {
+      //click logout buttom to logout 
       VueCookie.delete('TUTogetherUserData')
       this.$router.push('/login')
       this.$forceUpdate()

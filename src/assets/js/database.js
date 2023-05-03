@@ -1,4 +1,5 @@
 import { createConnection } from 'mysql';
+//connection to MySql
 var connection = createConnection({
     host     : 'sql12.freemysqlhosting.net',
     user     : 'sql12615707',
