@@ -19,10 +19,7 @@
 </template>
 <style scoped src="../assets/css/login.css">
 </style>
-  
   <script>
-import axios from 'axios'
-
 export default {
   data() {
     return {
