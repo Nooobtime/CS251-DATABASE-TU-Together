@@ -19,7 +19,10 @@
 </template>
 <style scoped src="../assets/css/login.css">
 </style>
+  
   <script>
+import axios from 'axios'
+import VueCookie from 'vue-cookie'
 export default {
   data() {
     return {
@@ -29,33 +32,30 @@ export default {
     }
   },
   methods: {
-    async login() {
-      try {
-        console.log(this.username)
-        console.log(this.password)
-        const response = await axios.post(
-          'https://restapi.tu.ac.th/api/v1/auth/Ad/verify2',
-          {
-            UserName: this.username,
-            PassWord: this.password
-          },
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              'Application-Key': 'TUdf7e79f1e0c5d3c9b2ec2f0e3a020b3304e430a0d5da9bb391acf6266e2c8fc3609c8ae07c5c9ea42e487b8eeb1af452'
-            }
+    login() {
+      axios.post(
+        'https://restapi.tu.ac.th/api/v1/auth/Ad/verify2',
+        {
+          UserName: this.username,
+          PassWord: this.password
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Application-Key': 'TUdf7e79f1e0c5d3c9b2ec2f0e3a020b3304e430a0d5da9bb391acf6266e2c8fc3609c8ae07c5c9ea42e487b8eeb1af452'
           }
-        )
-
-        let data = response.data
-        this.$router.push('/');
-        console.log(data)
-        // Handle successful login
-      } catch (error) {
-        // Handle login error
-        console.error(error)
-        this.error = error.response.data.message
-      }
+        }
+      )
+        .then(response => {
+          let data = response.data
+          VueCookie.set('TUTogetherUserData', data, {expires: '1d'})
+          this.$router.push('/');
+          console.log(data)
+        })
+        .catch(error => {
+          console.error(error)
+          this.error = error.response.data.message
+        })
     }
   }
 }
