@@ -1,5 +1,5 @@
 <template>
-  <NavBar/>
+  <NavBar />
   Poll page
-  <Footer/>
+  <Footer />
 </template>

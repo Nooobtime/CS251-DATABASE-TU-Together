@@ -7,8 +7,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
 const app = createApp(App)
 app.use(router)
-app.component('NavBar', NavBar);
-app.component('Footer', Footer);
-app.component('RouterLink', RouterLink);
-app.component('RouterView', RouterView);
+app.component('NavBar', NavBar)
+app.component('Footer', Footer)
+app.component('RouterLink', RouterLink)
+app.component('RouterView', RouterView)
 app.mount('#app')

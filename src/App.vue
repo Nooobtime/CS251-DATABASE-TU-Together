@@ -2,8 +2,8 @@
   <RouterView />
 </template>
 <style>
-*{
-  background-color: #FFDE59;
+* {
+  background-color: #ffde59;
 }
 </style>
 <script>
@@ -18,8 +18,8 @@ export default {
       // Get the userData cookie
       let storedData = VueCookie.get('TUTogetherUserData')
       if (!storedData) {
-        alert("login!")
-        this.$router.push('/login');
+        alert('login!')
+        this.$router.push('/login')
       }
     }
   }
