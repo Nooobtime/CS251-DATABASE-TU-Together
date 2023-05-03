@@ -1,14 +1,18 @@
 # Project Setup
+
+install package
+
 ```sh
 npm install
 ```
 
-# Compile and fast-Reload for Development
+Compile for Development
+
 ```sh
 npm run dev
 ```
 
-# Compile and Minify for Production
+Compile for Production
 
 ```sh
 npm run build
@@ -18,16 +22,20 @@ npm run build
 
 https://www.phpmyadmin.co/
 
-
 Server
+
 ```sh
 sql12.freemysqlhosting.net
 ```
+
 Username
+
 ```sh
 sql12615707
 ```
+
 Password
+
 ```sh
 qfAAk96pTa
 ```
