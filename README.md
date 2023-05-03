@@ -17,6 +17,8 @@ npm run build
 # database
 
 https://www.phpmyadmin.co/
+
+
 Server
 ```sh
 sql12.freemysqlhosting.net
