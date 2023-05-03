@@ -6,15 +6,15 @@
     <div><button @click="logout">Logout</button></div>
   </nav>
 </template>
+
 <script>
 import VueCookie from 'vue-cookie'
+import Logout from '../assets/js/logout.js'
+
 export default {
   methods: {
     logout() {
-      //click logout buttom to logout 
-      VueCookie.delete('TUTogetherUserData')
-      this.$router.push('/login')
-      this.$forceUpdate()
+      Logout.logout(this, VueCookie)
     }
   }
 }
