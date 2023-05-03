@@ -1,10 +1,11 @@
 import { createConnection } from 'mysql';
 var connection = createConnection({
-  host     : 'localhost',
-  user     : 'me',
-  password : 'secret',
-  database : 'my_db'
-});
+    host     : 'sql12.freemysqlhosting.net',
+    user     : 'sql12615707',
+    password : 'qfAAk96pTa',
+    database : 'sql12615707'
+  });
+  
 
 connection.connect();
 
@@ -17,4 +18,7 @@ db.query('SELECT * FROM users', function (error, results, fields) {
   if (error) throw error;
   console.log(results);
 });
+use
+https://www.phpmyadmin.co/
+to edit
 */
