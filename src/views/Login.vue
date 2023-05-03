@@ -30,6 +30,9 @@ export default {
       error: ''
     }
   },
+  mounted() {
+    this.getUserData()
+  },
   methods: {
     login() {
       axios
@@ -57,6 +60,14 @@ export default {
           console.error(error)
           this.error = error.response.data.message
         })
+    },
+    getUserData() {
+      // Get the userData cookie
+      let storedData = VueCookie.get('TUTogetherUserData')
+      if (storedData) {
+        alert('already login')
+        this.$router.push('/')
+      }
     }
   }
 }
