@@ -1,29 +1,35 @@
 <template>
-  <div>
-    <h1>Login</h1>
-    <form @submit.prevent="login">
-      <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" v-model="username" required />
+  <div class="container">
+    <div class="row">
+      <div class="col container">
+        <div>
+          <img src="../assets/img/logo/TU_logo.png" style="width: 40%" />
+          <span>welcome</span>
+          <h1>TU together</h1>
+        </div>
       </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="text" id="password" v-model="password" required />
+      <div class="col container">
+        <div class="">
+          <form @submit.prevent="login">
+            <div class="form-outline mb-4">
+              <label class="form-label" for="username">Username</label>
+              <input type="text" class="form-control" id="username" v-model="username" required />
+            </div>
+            <div class="form-outline mb-4">
+              <label class="form-label" for="password">Password</label>
+              <input type="text" class="form-control" id="password" v-model="password" required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+          </form>
+        </div>
       </div>
-      <div>
-        <button type="submit">Login</button>
-      </div>
-    </form>
-    <p v-if="error" style="color: red">{{ error }}</p>
+    </div>
   </div>
 </template>
-<style scoped src="../assets/css/login.css"></style>
-
 <script>
 import axios from 'axios'
 import VueCookie from 'vue-cookie'
 import loginMethods from '../assets/js/login.js'
-
 export default {
   data() {
     return {
