@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="centered-element">
+  <div>
+    <div>
       <span>
         404 Not Found
         <br />
@@ -23,6 +23,6 @@ span {
 <script>
 import redirectScript from '../assets/js/redirect.js'
 export default {
-  mixins: [redirectScript],
+  mixins: [redirectScript]
 }
 </script>
