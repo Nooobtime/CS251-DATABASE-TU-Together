@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Login from '../views/Login.vue'
 import poll from '../views/Poll.vue'
 import NotFound from '../views/404.vue'
+import test from '../views/test.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +22,10 @@ const router = createRouter({
       path: '/poll',
       name: 'poll',
       component: poll
+    },
+    {
+      path: '/test',
+      component: test
     },
     {
       path: '/:pathMatch(.*)*',
