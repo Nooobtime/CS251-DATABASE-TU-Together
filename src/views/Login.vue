@@ -1,25 +1,26 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col container">
+  <div  style="">
+    <div  >
+      <div >
         <div>
-          <img src="../assets/img/logo/TU_logo.png" style="width: 40%" />
+          <img src="../assets/img/logo/TU_logo.png"/>
           <span>welcome</span>
           <h1>TU together</h1>
         </div>
       </div>
-      <div class="col container">
-        <div class="">
-          <form @submit.prevent="login">
-            <div class="form-outline mb-4">
-              <label class="form-label" for="username">Username</label>
-              <input type="text" class="form-control" id="username" v-model="username" required />
+      <div >
+        <div >
+          <form @submit.prevent="login" >
+            <div>เข้าสู่ระบบ (นักศึกษา/บุคลากร)</div>
+            <div >
+              <label  for="username">Username</label>
+              <input type="text" id="username" placeholder="เลขทะเบียนนักศึกษา/รหัสผู้ใช้" v-model="username" required/>
             </div>
-            <div class="form-outline mb-4">
-              <label class="form-label" for="password">Password</label>
-              <input type="text" class="form-control" id="password" v-model="password" required />
+            <div >
+              <label  for="password">Password</label>
+              <input type="text"  id="password" placeholder="รหัสผ่าน" v-model="password" required />
             </div>
-            <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+            <button type="submit">Sign in</button>
             <p v-if="error" style="color: red">{{ error }}</p>
           </form>
         </div>

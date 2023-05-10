@@ -2,9 +2,16 @@
   <RouterView />
 </template>
 <style>
+h1{
+  font-size: 100px;
+}
 * {
   background-color: #ffde59;
+  
+  font-size: 30px;
 }
+
+
 </style>
 <script>
 import VueCookie from 'vue-cookie'
