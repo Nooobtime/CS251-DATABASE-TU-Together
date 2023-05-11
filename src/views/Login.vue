@@ -1,22 +1,22 @@
-
 <template>
-  <div>
-    <img src="../assets/img/logo/TU_logo.png" style="height: 100px; width: 100px" />
-  </div>
   <div class="login">
-    <h1>Login Page</h1>
+    <div id="text">
+      <img src="../assets/img/logo/TU_logo.png" style="height: 100px; width: 100px" />
+      <h1>WELCOME<br />TU Tugether</h1>
+    </div>
     <form class="column" @submit.prevent="login">
-      <label>Username</label>
       <input
         type="text"
         id="username"
-        placeholder="เลขทะเบียนนักศึกษา/รหัสผู้ใช้"
+        placeholder="student id/user id"
         v-model="username"
         required
       />
-      <label>Password</label>
-      <input type="text" id="password" placeholder="รหัสผ่าน" v-model="password" required />
-      <button type="submit">Sign in</button>
+      <input type="text" id="password" placeholder="password" v-model="password" required />
+      <button type="submit">login</button>
+      <div>
+        <p v-if="error" style="color: red">{{ error }}</p>
+      </div>
     </form>
   </div>
 </template>
@@ -48,12 +48,17 @@ export default {
 .login {
   max-width: 400px;
   margin: auto;
-  padding: 20px;
+  margin-top: 100px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 25px;
+  background-color: rgb(255, 255, 255, 0.5);
+  color: black;
 }
 .login h1 {
-  text-align: center;
   margin-bottom: 20px;
 }
 .login form {
@@ -67,15 +72,24 @@ export default {
 .login input {
   padding: 10px;
   margin-bottom: 20px;
-  border-radius: 5px;
+  border-radius: 25px;
   border: 1px solid #ccc;
 }
 .login button {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 25px;
   border: none;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #ffb048;
   cursor: pointer;
+}
+#text {
+  text-align: center;
+  text-align: center;
+}
+input:focus {
+  outline: none;
+}
+img {
+  margin-top: 10px;
 }
 </style>
