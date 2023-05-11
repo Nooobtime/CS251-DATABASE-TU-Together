@@ -9,9 +9,9 @@
     <div class="logo">
       <img src="../assets/img/logo/TU_logo.png" style="height: 50px; width: 50px" />
     </div>
-    <div><router-link to="/">home</router-link></div>
-    <div><router-link to="/poll">poll</router-link></div>
-    <div><router-link to="/">edit</router-link></div>
+    <div id="router"><router-link to="/">home</router-link></div>
+    <div id="router"><router-link to="/poll">poll</router-link></div>
+    <div id="router"><router-link to="/">edit</router-link></div>
     <div class="icon" @click="myFunction()">
       <i id="icon" class="fa fa-bars"></i>
     </div>
@@ -19,6 +19,9 @@
 </template>
 <style>
 /* Add a black background color to the top navigation */
+#router {
+  padding: 30px 16px;
+}
 .topnav {
   background-color: #333;
   overflow: hidden;
@@ -60,6 +63,9 @@ img {
     float: right;
     display: block;
   }
+  #router {
+    padding: 10px 16px;
+  }
 }
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
@@ -77,6 +83,9 @@ img {
     display: block;
     text-align: left;
   }
+  .logo {
+    border-bottom: 1px solid black;
+  }
 }
 </style>
 <script>
@@ -91,14 +100,13 @@ export default {
     /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
     myFunction() {
       var x = document.getElementById('myTopnav')
-      var icon =document.getElementById('icon')
+      var icon = document.getElementById('icon')
       if (x.className === 'topnav') {
         x.className += ' responsive'
-        icon.className='fa-solid fa-xmark'
-       
+        icon.className = 'fa-solid fa-xmark'
       } else {
         x.className = 'topnav'
-        icon.className='fa fa-bars'
+        icon.className = 'fa fa-bars'
       }
     }
   }
