@@ -5,9 +5,6 @@ import router from './router'
 import NavBar from './components/NavBar.vue'
 import Footer from './components/footer.vue'
 import { RouterLink, RouterView } from 'vue-router'
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
-
 const app = createApp(App)
 app.use(router)
 app.component('NavBar', NavBar)
