@@ -13,7 +13,7 @@
     <div><router-link to="/poll">poll</router-link></div>
     <div><router-link to="/">edit</router-link></div>
     <div class="icon" @click="myFunction()">
-      <i class="fa fa-bars"></i>
+      <i id="icon" class="fa fa-bars"></i>
     </div>
   </div>
 </template>
@@ -91,10 +91,14 @@ export default {
     /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
     myFunction() {
       var x = document.getElementById('myTopnav')
+      var icon =document.getElementById('icon')
       if (x.className === 'topnav') {
         x.className += ' responsive'
+        icon.className='fa-solid fa-xmark'
+       
       } else {
         x.className = 'topnav'
+        icon.className='fa fa-bars'
       }
     }
   }
