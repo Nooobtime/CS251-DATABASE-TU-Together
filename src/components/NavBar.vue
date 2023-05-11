@@ -15,6 +15,7 @@
     <div class="icon" @click="myFunction()">
       <i id="icon" class="fa fa-bars"></i>
     </div>
+    <div id="router"><button @click="logout()">log out</button></div>
   </div>
 </template>
 <style>
