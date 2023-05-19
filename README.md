@@ -45,7 +45,7 @@ qfAAk96pTa
 use npm to install Protractor globally with
 
 ```sh
-sql12.freemysqlhosting.net
+npm install -g protractor
 ```
 
 update webdriver
