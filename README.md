@@ -39,3 +39,29 @@ Password
 ```sh
 qfAAk96pTa
 ```
+
+# Automate test Protractor
+
+use npm to install Protractor globally with
+
+```sh
+sql12.freemysqlhosting.net
+```
+
+update webdriver
+
+```sh
+webdriver-manager update
+```
+
+Now start up a server with
+
+```sh
+webdriver-manager start
+```
+
+run the test
+
+```sh
+protractor conf.js
+```
