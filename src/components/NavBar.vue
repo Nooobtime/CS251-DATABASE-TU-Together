@@ -4,7 +4,6 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
   />
-
   <div class="topnav" id="myTopnav">
     <div class="logo">
       <img src="../assets/img/logo/TU_logo.png" style="height: 50px; width: 50px" />
@@ -15,7 +14,7 @@
     <div class="icon" @click="myFunction()">
       <i id="icon" class="fa fa-bars"></i>
     </div>
-    <div id="router"><button @click="logout()">log out</button></div>
+    <div id="router"><button id="logout" @click="logout()">log out</button></div>
   </div>
 </template>
 <style>

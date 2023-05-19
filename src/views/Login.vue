@@ -13,7 +13,7 @@
         required
       />
       <input type="text" id="password" placeholder="password" v-model="password" required />
-      <button type="submit">login</button>
+      <button id="login" type="submit">login</button>
       <div>
         <p v-if="error" style="color: red">{{ error }}</p>
       </div>
