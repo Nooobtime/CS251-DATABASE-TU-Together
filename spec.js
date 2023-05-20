@@ -26,6 +26,11 @@ describe('angularjs homepage todo list', function () {
   })
 
   it('test tu api for login', async () => {
+    /*
+    var eleLogout = element(by.id('logout'))
+    await browser.wait(EC.visibilityOf(eleLogout), 10000)
+    await eleLogout.click()
+    */
     //expect have navbar
   })
 
