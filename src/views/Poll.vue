@@ -1,4 +1,8 @@
-<template></template>
+<template>
+  <NavBar />
+  POLL
+  <Footer />
+</template>
 
 <script>
 export default {};

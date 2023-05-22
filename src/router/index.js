@@ -24,27 +24,24 @@ const router = createRouter({
     },
     {
       path: "/poll",
+      component: Poll,
+    },
+
+    {
+      path: "/polllist",
       component: PollList,
-      children: [
-        {
-          path: "create",
-          component: CreatePoll,
-        },
-        {
-          path: "id",
-          component: Poll,
-          children: [
-            {
-              path: "edit",
-              component: EditPoll,
-            },
-            {
-              path: "vote",
-              component: VotePoll,
-            },
-          ],
-        },
-      ],
+    },
+    {
+      path: "/polledit",
+      component: EditPoll,
+    },
+    {
+      path: "/pollcreate",
+      component: CreatePoll,
+    },
+    {
+      path: "/pollvote",
+      component: VotePoll,
     },
   ],
 });

@@ -1,5 +1,5 @@
 <template>
   <NavBar />
-  wdw
+  HOME
   <Footer />
 </template>
