@@ -10,7 +10,7 @@
     </div>
     <div id="router"><router-link to="/">home</router-link></div>
     <div id="router"><router-link to="/poll">poll</router-link></div>
-    <div id="router"><router-link to="/">edit</router-link></div>
+    <div id="router"><router-link to="/">my poll</router-link></div>
     <div class="icon" @click="myFunction()">
       <i id="icon" class="fa fa-bars"></i>
     </div>

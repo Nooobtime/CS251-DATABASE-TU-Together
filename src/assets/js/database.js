@@ -6,9 +6,7 @@ var connection = createConnection({
   password: 'qfAAk96pTa',
   database: 'sql12615707'
 })
-
 connection.connect()
-
 export default connection
 
 /*In the component where you want to use the database connection, import the connection object at the top of the file:

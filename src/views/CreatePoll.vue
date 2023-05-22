@@ -1,4 +1,4 @@
-<template></template>
+<template>CREATE POLL</template>
 
 <script>
 export default {}
