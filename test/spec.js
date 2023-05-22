@@ -2,7 +2,6 @@ describe('angularjs homepage todo list', function () {
   var EC = protractor.ExpectedConditions
   var user = '6409650089'
   var pass = '1129701288545'
-
   beforeEach(async () => {
     //login every time when start each test
     await browser.get('http://localhost:8000/login')

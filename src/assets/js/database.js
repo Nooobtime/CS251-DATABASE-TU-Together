@@ -1,13 +1,13 @@
-import { createConnection } from 'mysql'
+import { createConnection } from "mysql";
 //connection to MySql
 var connection = createConnection({
-  host: 'sql12.freemysqlhosting.net',
-  user: 'sql12615707',
-  password: 'qfAAk96pTa',
-  database: 'sql12615707'
-})
-connection.connect()
-export default connection
+  host: "sql12.freemysqlhosting.net",
+  user: "sql12615707",
+  password: "qfAAk96pTa",
+  database: "sql12615707",
+});
+connection.connect();
+export default connection;
 
 /*In the component where you want to use the database connection, import the connection object at the top of the file:
 import db from './db.js';

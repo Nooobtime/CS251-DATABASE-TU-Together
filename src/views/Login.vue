@@ -1,7 +1,10 @@
 <template>
   <div class="login">
     <div id="text">
-      <img src="../assets/img/logo/TU_logo.png" style="height: 100px; width: 100px" />
+      <img
+        src="../assets/logo/TU_logo.png"
+        style="height: 100px; width: 100px"
+      />
       <h1>WELCOME<br />TU Tugether</h1>
     </div>
     <form class="column" @submit.prevent="login">
@@ -12,7 +15,13 @@
         v-model="username"
         required
       />
-      <input type="text" id="password" placeholder="password" v-model="password" required />
+      <input
+        type="text"
+        id="password"
+        placeholder="password"
+        v-model="password"
+        required
+      />
       <button id="login" type="submit">login</button>
       <div>
         <p v-if="error" style="color: red">{{ error }}</p>
@@ -22,26 +31,26 @@
 </template>
 
 <script>
-import axios from 'axios'
-import VueCookie from 'vue-cookie'
-import loginMethods from '../assets/js/login.js'
+import axios from "axios";
+import VueCookie from "vue-cookie";
+import loginMethods from "../assets/js/login.js";
 export default {
   data() {
     return {
-      username: '',
-      password: '',
-      error: ''
-    }
+      username: "",
+      password: "",
+      error: "",
+    };
   },
   mounted() {
-    loginMethods.getUserData(this)
+    loginMethods.getUserData(this);
   },
   methods: {
     login() {
-      loginMethods.login(this, axios, VueCookie)
-    }
-  }
-}
+      loginMethods.login(this, axios, VueCookie);
+    },
+  },
+};
 </script>
 
 <style>

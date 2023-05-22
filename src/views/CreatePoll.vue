@@ -1,7 +1,7 @@
 <template>CREATE POLL</template>
 
 <script>
-export default {}
+export default {};
 </script>
 
 <style></style>
