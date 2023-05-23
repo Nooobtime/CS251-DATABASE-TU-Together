@@ -1,7 +1,6 @@
 export default {
   data() {
     return {
-      // set the initial countdown value to 5
       countdown: 5,
     };
   },
