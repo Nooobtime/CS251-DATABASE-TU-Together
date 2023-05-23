@@ -4,7 +4,7 @@
       <div class="sm:flex sm:items-center sm:justify-between">
         <a href="https://flowbite.com/" class="flex items-center mb-4 sm:mb-0">
           <img
-            src="https://flowbite.com/docs/images/logo.svg"
+            src="../assets/logo/TU_logo.png"
             class="h-8 mr-3"
             alt="Flowbite Logo"
           />
