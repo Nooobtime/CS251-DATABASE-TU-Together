@@ -5,7 +5,6 @@ import NotFound from "../views/404.vue";
 import PollList from "../views/PollList.vue";
 import EditPoll from "../views/EditPoll.vue";
 import CreatePoll from "../views/CreatePoll.vue";
-import VotePoll from "../views/VotePoll.vue";
 import Poll from "../views/Poll.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,10 +37,6 @@ const router = createRouter({
     {
       path: "/pollcreate",
       component: CreatePoll,
-    },
-    {
-      path: "/pollvote",
-      component: VotePoll,
     },
   ],
 });

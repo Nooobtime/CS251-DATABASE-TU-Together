@@ -8,8 +8,7 @@
             class="h-8 mr-3"
             alt="Flowbite Logo"
           />
-          <span
-            class="self-center text-2xl font-semibold whitespace-nowrap"
+          <span class="self-center text-2xl font-semibold whitespace-nowrap"
             >TU Tugether</span
           >
         </a>
@@ -30,11 +29,8 @@
           </li>
         </ul>
       </div>
-      <hr
-        class="my-6 border-gray-200 sm:mx-auto"
-      />
-      <span
-        class="block text-sm text-gray-500 sm:text-center"
+      <hr class="my-6 border-gray-200 sm:mx-auto" />
+      <span class="block text-sm text-gray-500 sm:text-center"
         >© 2023
         <a href="https://flowbite.com/" class="hover:underline">TU Tugether</a>.
         All Rights Reserved.</span

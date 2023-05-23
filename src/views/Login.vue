@@ -1,7 +1,10 @@
 <template>
   <div class="login">
     <div id="text">
-      <img src="../assets/logo/TU_logo.png" style="height: 100px; width: 100px" />
+      <img
+        src="../assets/logo/TU_logo.png"
+        style="height: 100px; width: 100px"
+      />
       <h1>WELCOME<br />TU Tugether</h1>
     </div>
     <form class="column" @submit.prevent="login">

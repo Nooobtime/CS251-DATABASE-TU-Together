@@ -19,23 +19,21 @@
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
-          <th scope="col" class="px-5 py-3">Product name</th>
-          <th scope="col" class="px-5 py-3">Category</th>
-          <th scope="col" class="px-5 py-3">Price</th>
-          <th scope="col" class="px-5 py-3">Action</th>
+          <th scope="col" class="px-3 py-2">ชื่อ Poll</th>
+          <th scope="col" class="px-3 py-2">หมดเขต</th>
+          <th scope="col" class="px-3 py-22">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr class="bg-white border-b">
           <th
             scope="row"
-            class="px-5 py-4 font-medium text-gray-900 whitespace-nowrap"
+            class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
           >
             Apple MacBook Pro 17"
           </th>
-          <td class="px-5 py-4">Laptop</td>
-          <td class="px-5 py-4">$2999</td>
-          <td class="px-5 py-4">
+          <td class="px-3 py-2">$2999</td>
+          <td class="px-3 py-2">
             <a href="#" class="font-medium text-blue-600">Edit </a>
           </td>
         </tr>
