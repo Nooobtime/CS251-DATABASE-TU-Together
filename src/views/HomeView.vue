@@ -1,7 +1,7 @@
 <template>
   <NavBar />
   <div class="bg-white">
-    <div class="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
+    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div
         class="relative isolate overflow-hidden bg-gray-900 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0"
       >
@@ -61,6 +61,30 @@
       </div>
     </div>
   </div>
-
+  <div class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+        <div
+          v-for="stat in stats"
+          :key="stat.id"
+          class="mx-auto flex max-w-xs flex-col gap-y-4"
+        >
+          <dt class="text-base leading-7 text-gray-600">{{ stat.name }}</dt>
+          <dd
+            class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl"
+          >
+            {{ stat.value }}
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
   <Footer />
 </template>
+<script setup>
+const stats = [
+  { id: 1, name: "ยังกับ Tesis", value: "สั่งงานก็ยาก" },
+  { id: 2, name: "เดือนเดียวเอง", value: "เวลาก็น้อย" },
+  { id: 3, name: "เกรด D ก็ได้", value: "ไม่ทำแล้ว" },
+];
+</script>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="fixed top-0 left-0 w-full bg-white border-gray-200">
+  <nav class="fixed top-0 left-0 w-full bg-white border-gray-200 z-50">
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
@@ -76,6 +76,7 @@
       </div>
     </div>
   </nav>
+  <div class="pb-24"></div>
 </template>
 
 <script>

@@ -1,50 +1,45 @@
 <template>
   <NavBar />
-  <h1>รายการ Poll</h1>
-  <div class="mx-10 flex justify-end">
-    <button
-      type="button"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+  <ul role="list" class="divide-y divide-gray-100 mx-4 md:mx-36">
+    <li
+      v-for="person in people"
+      :key="person.email"
+      class="flex justify-between gap-x-6 py-5"
     >
-      <router-link to="/">All Poll</router-link>
-    </button>
-    <button
-      type="button"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-    >
-      <router-link to="/">My Poll</router-link>
-    </button>
-  </div>
-  <div class="mx-10 my-4 relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left text-gray-500">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-        <tr>
-          <th scope="col" class="px-3 py-2">ชื่อ Poll</th>
-          <th scope="col" class="px-3 py-2">หมดเขต</th>
-          <th scope="col" class="px-3 py-22">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="bg-white border-b">
-          <th
-            scope="row"
-            class="px-3 py-2 font-medium text-gray-900 whitespace-nowrap"
+      <div class="flex gap-x-4">
+        <div class="min-w-0 flex-auto">
+          <p class="text-sm font-semibold leading-6 text-gray-900">
+            {{ person.name }}
+          </p>
+          <p class="mt-1 truncate text-xs leading-5 text-gray-500">
+            {{ person.email }}
+          </p>
+        </div>
+      </div>
+      <div class="hidden sm:flex sm:flex-col sm:items-end">
+        <router-link to="/poll">
+          <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
           >
-            Apple MacBook Pro 17"
-          </th>
-          <td class="px-3 py-2">$2999</td>
-          <td class="px-3 py-2">
-            <a href="#" class="font-medium text-blue-600">Edit </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <button
-    type="button"
-    class="mx-10 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none"
-  >
-    Create Poll
-  </button>
+            check
+          </button>
+        </router-link>
+      </div>
+    </li>
+  </ul>
   <Footer />
 </template>
+
+<script setup>
+const people = [
+  {
+    name: "Poll Name 1",
+    email: "ลายละเอียด 1",
+  },
+  {
+    name: "Poll Name 2",
+    email: "ลายละเอียด 2",
+  },
+];
+</script>

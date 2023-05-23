@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
   <div class="container flex justify-center items-center h-screen">
     <div>
       <span class="text-5xl font-bold text-gray-800 text-center mb-8"
@@ -20,6 +21,7 @@
       ></div>
     </div>
   </div>
+  <Footer />
 </template>
 
 <script>
