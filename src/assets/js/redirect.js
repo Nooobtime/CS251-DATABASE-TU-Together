@@ -9,7 +9,6 @@ export default {
       if (this.countdown > 1) {
         this.countdown--;
       } else {
-        // redirect to another page after the countdown finishes
         this.$router.push("/");
       }
     }, 1000);
