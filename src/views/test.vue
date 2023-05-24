@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="min-h-full">
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -29,7 +29,7 @@
                 Poll
               </router-link>
               <button
-              class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+              class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
               @click="logout"
             >
               Logout
@@ -79,7 +79,7 @@
           Poll
         </router-link>
         <button
-        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+        class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
         @click="logout"
       >
         Logout
@@ -88,7 +88,6 @@
       </DisclosurePanel>
     </Disclosure>
   </div>
-  <div class="pt-10"></div>
 </template>
 
 <script setup>
@@ -102,6 +101,11 @@ import {
   MenuItems,
 } from "@headlessui/vue";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+const navigation = [
+  { name: "Home", href: "/", current: false },
+  { name: "Poll", href: "/polllist", current: false },
+  { name: "Sign out", href: "#", current: false },
+];
 </script>
 
 <script>

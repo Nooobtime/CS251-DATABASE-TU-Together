@@ -1,18 +1,24 @@
 <template>
   <NavBar />
+  <h1 class="text-center">รายชื่อ poll</h1>
+  <div class="justify-items-end">
+    <button class="mr-2">all poll</button>
+    <button class="mr-2">my poll</button>
+    <button>my poll</button>
+  </div>
   <ul role="list" class="divide-y divide-gray-100 mx-4 md:mx-36">
     <li
-      v-for="person in people"
-      :key="person.email"
+      v-for="rival in side"
+      :key="rival.info"
       class="flex justify-between gap-x-6 py-5"
     >
       <div class="flex gap-x-4">
         <div class="min-w-0 flex-auto">
           <p class="text-sm font-semibold leading-6 text-gray-900">
-            {{ person.name }}
+            {{ rival.info }}
           </p>
           <p class="mt-1 truncate text-xs leading-5 text-gray-500">
-            {{ person.email }}
+            {{ rival.info }}
           </p>
         </div>
       </div>
@@ -30,16 +36,20 @@
   </ul>
   <Footer />
 </template>
-
 <script setup>
-const people = [
+let side = [
   {
     name: "Poll Name 1",
-    email: "ลายละเอียด 1",
+    info: "ลายละเอียด 1",
   },
   {
     name: "Poll Name 2",
-    email: "ลายละเอียด 2",
+    info: "ลายละเอียด 2",
   },
 ];
+function getid() {
+  //get id from vue cookie
+  //define side to below code
+}
+getid();
 </script>

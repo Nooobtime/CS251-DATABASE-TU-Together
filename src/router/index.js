@@ -6,6 +6,7 @@ import PollList from "../views/PollList.vue";
 import EditPoll from "../views/EditPoll.vue";
 import CreatePoll from "../views/CreatePoll.vue";
 import Poll from "../views/Poll.vue";
+import test from "../views/test.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,7 +26,10 @@ const router = createRouter({
       path: "/poll",
       component: Poll,
     },
-
+    {
+      path: "/test",
+      component: test,
+    },
     {
       path: "/polllist",
       component: PollList,
@@ -40,4 +44,5 @@ const router = createRouter({
     },
   ],
 });
+
 export default router;

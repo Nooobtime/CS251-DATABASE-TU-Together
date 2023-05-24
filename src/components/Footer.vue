@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-24"></div>
+  <div class="pt-24 mt-20"></div>
   <footer class="bg-white shadow z-50">
     <div class="w-full max-w-screen-xl mx-auto p-3 md:py-6">
       <div class="sm:flex sm:items-center sm:justify-between">
@@ -17,10 +17,14 @@
           class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0"
         >
           <li>
-            <a href="#" class="mr-4 hover:underline md:mr-6">About</a>
+            <a href="https://tu.ac.th/" class="mr-4 hover:underline md:mr-6"
+              >TU</a
+            >
           </li>
           <li>
-            <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+            <a href="https://reg.tu.ac.th/" class="mr-4 hover:underline md:mr-6"
+              >REG TU</a
+            >
           </li>
           <li>
             <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
