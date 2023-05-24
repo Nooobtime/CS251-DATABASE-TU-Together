@@ -5,9 +5,14 @@ import NotFound from "../views/404.vue";
 import PollList from "../views/PollList.vue";
 import Poll from "../views/Poll.vue";
 import requestcreate from "../views/requestcreate.vue";
+import test from "../views/test.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/test",
+      component: test,
+    },
     {
       path: "/",
       component: HomeView,
