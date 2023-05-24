@@ -3,10 +3,8 @@ import HomeView from "../views/HomeView.vue";
 import Login from "../views/Login.vue";
 import NotFound from "../views/404.vue";
 import PollList from "../views/PollList.vue";
-import EditPoll from "../views/EditPoll.vue";
-import CreatePoll from "../views/CreatePoll.vue";
 import Poll from "../views/Poll.vue";
-import test from "../views/test.vue";
+import requestcreate from "../views/requestcreate.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -27,20 +25,12 @@ const router = createRouter({
       component: Poll,
     },
     {
-      path: "/test",
-      component: test,
-    },
-    {
       path: "/polllist",
       component: PollList,
     },
     {
-      path: "/polledit",
-      component: EditPoll,
-    },
-    {
-      path: "/pollcreate",
-      component: CreatePoll,
+      path: "/requestcreate",
+      component: requestcreate,
     },
   ],
 });

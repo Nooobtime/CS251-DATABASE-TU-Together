@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <nav class="fixed top-0 left-0 w-full z-50">
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -23,17 +23,17 @@
                   Home
                 </router-link>
                 <router-link
-                to="/polllist"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              >
-                Poll
-              </router-link>
-              <button
-              class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-              @click="logout"
-            >
-              Logout
-            </button>
+                  to="/polllist"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                >
+                  Poll
+                </router-link>
+                <button
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  @click="logout"
+                >
+                  Logout
+                </button>
               </div>
               <!-- Profile dropdown -->
               <Menu as="div" class="relative ml-3">
@@ -66,29 +66,35 @@
 
       <DisclosurePanel class="md:hidden">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+          <div>
             <router-link
-            to="/"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-          >
-            Home
-          </router-link>
-          <router-link
-          to="/polllist"
-          class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-        >
-          Poll
-        </router-link>
-        <button
-        class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-        @click="logout"
-      >
-        Logout
-      </button>
+              to="/"
+              class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+            >
+              Home
+            </router-link>
+          </div>
+          <div>
+            <router-link
+              to="/polllist"
+              class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+            >
+              Poll
+            </router-link>
+          </div>
+          <div>
+            <span
+              class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+              @click="logout"
+            >
+              Logout
+            </span>
+          </div>
         </div>
       </DisclosurePanel>
     </Disclosure>
-  </div>
-  <div class="pt-10"></div>
+  </nav>
+  <div class="pt-20"></div>
 </template>
 
 <script setup>
@@ -98,10 +104,8 @@ import {
   DisclosurePanel,
   Menu,
   MenuButton,
-  MenuItem,
-  MenuItems,
 } from "@headlessui/vue";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 </script>
 
 <script>

@@ -1,10 +1,9 @@
 <template>
   <NavBar />
-  <h1 class="text-center">รายชื่อ poll</h1>
+  <h1 class="text-center text-3xl">รายชื่อ poll</h1>
   <div class="justify-items-end">
     <button class="mr-2">all poll</button>
     <button class="mr-2">my poll</button>
-    <button>my poll</button>
   </div>
   <ul role="list" class="divide-y divide-gray-100 mx-4 md:mx-36">
     <li

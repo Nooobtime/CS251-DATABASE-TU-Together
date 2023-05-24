@@ -1,47 +1,7 @@
 <template>
   <NavBar />
   <div class="bg-white">
-    <div class="pt-6">
-      <nav aria-label="Breadcrumb">
-        <ol
-          role="list"
-          class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
-        >
-          <li v-for="breadcrumb in product.breadcrumbs" :key="breadcrumb.id">
-            <div class="flex items-center">
-              <a
-                :href="breadcrumb.href"
-                class="mr-2 text-sm font-medium text-gray-900"
-                >{{ breadcrumb.name }}</a
-              >
-              <svg
-                width="16"
-                height="20"
-                viewBox="0 0 16 20"
-                fill="currentColor"
-                aria-hidden="true"
-                class="h-5 w-4 text-gray-300"
-              >
-                <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-              </svg>
-            </div>
-          </li>
-          <li class="text-sm">
-            <a
-              :href="product.href"
-              aria-current="page"
-              class="font-medium text-gray-500 hover:text-gray-600"
-              >{{ product.name }}</a
-            >
-          </li>
-        </ol>
-      </nav>
-
-      <!-- Image gallery -->
-      <div
-        class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8"
-      ></div>
-
+    <div class="">
       <!-- Product info -->
       <div
         class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16"
@@ -177,7 +137,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { StarIcon } from "@heroicons/vue/20/solid";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 
 const product = {
@@ -228,8 +187,5 @@ const product = {
   details:
     'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
 };
-const reviews = { href: "#", average: 4, totalCount: 117 };
-
-const selectedColor = ref(product.colors[0]);
 const selectedSize = ref(product.sizes[2]);
 </script>
