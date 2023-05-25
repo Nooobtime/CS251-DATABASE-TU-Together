@@ -82,7 +82,6 @@
               Poll
             </router-link>
           </div>
-          <!--
             <div v-if="isAdmin">
               <router-link
                 to="/createPoll"
@@ -90,7 +89,7 @@
               >
                 Create
               </router-link>
-            </div>-->
+            </div>
           <div>
             <span
               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
@@ -120,6 +119,11 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
 <script>
 import VueCookie from "vue-cookie";
 export default {
+  data() {
+    return {
+      isAdmin: true,
+    };
+  },
   methods: {
     logout() {
       VueCookie.delete("TUTogetherUserData");
@@ -129,13 +133,19 @@ export default {
       this.$router.push(href);
     },
     isAdmin() {
-      //get id from cookie
-      //checka admin id from database
-      if (true) {
-        return true
-      } else {
-        return false
+      //get userid from cookie
+      //https://restapi.tu.ac.th/tuapi/docs/GettingAuth
+      //check userid from database admin?
+      /*if(){
+        is admin
       }
+      else if{
+        not admin
+      }
+      else{
+        no user in database
+        add user
+      }*/
     },
   },
 };
