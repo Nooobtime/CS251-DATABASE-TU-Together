@@ -9,6 +9,8 @@ CREATE TABLE poll (
   id VARCHAR(10) PRIMARY KEY,
   name VARCHAR(50),
   info VARCHAR(500),
+  startdate DATE,
+  enddate DATE,
   CONSTRAINT uq_poll_id UNIQUE (id)
 );
 
