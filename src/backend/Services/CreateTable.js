@@ -1,3 +1,4 @@
+/*
 CREATE TABLE user (
   id VARCHAR(10) PRIMARY KEY,
   isAdmin BOOLEAN,
@@ -28,3 +29,4 @@ CREATE TABLE vote (
   FOREIGN KEY (poll_id) REFERENCES poll(id),
   FOREIGN KEY (side_id) REFERENCES side(id)
 );
+*/
