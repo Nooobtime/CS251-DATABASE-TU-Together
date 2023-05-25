@@ -32,6 +32,7 @@
   <Footer />
 </template>
 <script setup>
+import connection from '../backend/database';
 let side = [
   {
     name: "Poll Name 1",
