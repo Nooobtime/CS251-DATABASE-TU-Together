@@ -16,7 +16,7 @@ const ViewPoll = (pollId) => {
       return;
     }
 
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, (error, results) => {
       if (error) {
         console.error("Error executing the SQL statement:", error);
         return;

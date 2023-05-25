@@ -9,7 +9,7 @@ const AddVote = (userId, poll_id, side_id) => {
       console.error("Error connecting to the database:", err);
       return;
     }
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, (error) => {
       if (error) {
         console.error("Error executing the SQL statement:", error);
         return;

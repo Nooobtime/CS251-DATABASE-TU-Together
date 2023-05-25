@@ -18,7 +18,7 @@ const deletePoll = (poll_id) => {
       return;
     }
 
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, (error) => {
       if (error) {
         console.error("Error executing the SQL statement:", error);
         return;

@@ -12,7 +12,7 @@ const CreateSide = (id, poll_id, name, info) => {
       return;
     }
 
-    connection.query(query, (error, results, fields) => {
+    connection.query(query, (error) => {
       if (error) {
         console.error("Error executing the SQL statement:", error);
         return;
