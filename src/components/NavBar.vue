@@ -28,6 +28,13 @@
                 >
                   Poll
                 </router-link>
+                <router-link
+                  to="/createPoll"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  v-if="isAdmin"
+                >
+                  Create
+                </router-link>
                 <button
                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                   @click="logout"
@@ -121,7 +128,7 @@ import VueCookie from "vue-cookie";
 export default {
   data() {
     return {
-      isAdmin: true,
+      isAdmin: false,
     };
   },
   methods: {
