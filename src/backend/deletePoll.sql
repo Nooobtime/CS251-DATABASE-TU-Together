@@ -1,0 +1,1 @@
+DELETE FROM poll WHERE id = 'your_id_here';

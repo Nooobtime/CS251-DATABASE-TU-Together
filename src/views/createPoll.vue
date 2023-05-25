@@ -1,6 +1,4 @@
-<template>
-  createpoll
-</template>
+<template>createpoll</template>
 
 <script>
 export default {
@@ -10,7 +8,7 @@ export default {
       //check id in database for admin pass
       //get data from data base
       if (false) {
-        //alert you dont have pass 
+        //alert you dont have pass
         //router to main page
       }
     },

@@ -47,6 +47,5 @@ let side = [
 function getAllPoll() {
   //get poll in poll table from data base
   //make arr of it(Poll name, poll info, Poll id)
-  
 }
 </script>

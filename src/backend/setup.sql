@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS vote;
+DROP TABLE IF EXISTS side;
+DROP TABLE IF EXISTS poll;
+DROP TABLE IF EXISTS user;
+
 CREATE TABLE user (
   id VARCHAR(10) PRIMARY KEY,
   isAdmin BOOLEAN,
@@ -31,3 +36,4 @@ CREATE TABLE vote (
 
 INSERT INTO user (id, isAdmin)
 VALUES ('user123', true);
+
