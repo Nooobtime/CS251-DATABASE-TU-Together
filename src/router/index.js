@@ -4,8 +4,8 @@ import Login from "../views/Login.vue";
 import NotFound from "../views/404.vue";
 import PollList from "../views/PollList.vue";
 import Poll from "../views/Poll.vue";
-import requestcreate from "../views/requestcreate.vue";
 import test from "../views/test.vue";
+import createPoll from "../views/createPoll.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -34,8 +34,8 @@ const router = createRouter({
       component: PollList,
     },
     {
-      path: "/requestcreate",
-      component: requestcreate,
+      path: "/createPoll",
+      component: createPoll,
     },
   ],
 });

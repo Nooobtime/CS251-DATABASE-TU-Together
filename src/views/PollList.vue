@@ -1,10 +1,6 @@
 <template>
   <NavBar />
   <h1 class="text-center text-3xl">รายชื่อ poll</h1>
-  <div class="justify-items-end">
-    <button class="mr-2">all poll</button>
-    <button class="mr-2">my poll</button>
-  </div>
   <ul role="list" class="divide-y divide-gray-100 mx-4 md:mx-36">
     <li
       v-for="rival in side"
@@ -40,15 +36,17 @@ let side = [
   {
     name: "Poll Name 1",
     info: "ลายละเอียด 1",
+    id: "ลายละเอียด 1",
   },
   {
     name: "Poll Name 2",
     info: "ลายละเอียด 2",
+    id: "ลายละเอียด 1",
   },
 ];
-function getid() {
-  //get id from vue cookie
-  //define side to below code
+function getAllPoll() {
+  //get poll in poll table from data base
+  //make arr of it(Poll name, poll info, Poll id)
+  
 }
-getid();
 </script>
