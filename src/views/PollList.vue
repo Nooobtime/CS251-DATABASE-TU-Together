@@ -32,6 +32,7 @@
   <Footer />
 </template>
 <script setup>
+import POLLIST from "../backend/Services/ViewPollList"
 let side = [
   {
     name: "Poll Name 1",
@@ -46,6 +47,16 @@ let side = [
 ];
 function getAllPoll() {
   //get poll in poll table from data base
-  //make arr of it(Poll name, poll info, Poll id)
+  ViewPollList()
+  .then((results) => {
+    //side = results 
+    console.log(results);
+  })
+  .catch((error) => {
+    // Handle any errors that occurred during the query
+    console.error(error);
+  });
+  
+  
 }
 </script>

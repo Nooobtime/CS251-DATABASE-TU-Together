@@ -9,7 +9,9 @@ export default {
       //get data from data base
       if (false) {
         //alert you dont have pass
+       // alert("you dont have pass");
         //router to main page
+       // this.$router.push("/login");      
       }
     },
     createPoll() {
