@@ -1,9 +1,7 @@
 import connection from "../database";
-const CreateSide = (id, poll_id, name, info) => {
-  const query = `
-    INSERT INTO side (id, poll_id, name, info)
-    VALUES ('${id}', '${poll_id}', '${name}', '${info}');
-  `;
+
+const viewAllPolls = () => {
+  const query = "SELECT * FROM poll";
 
   connection.connect((err) => {
     if (err) {
@@ -11,16 +9,17 @@ const CreateSide = (id, poll_id, name, info) => {
       return;
     }
 
-    connection.query(query, (error) => {
+    connection.query(query, (error, results) => {
       if (error) {
         console.error("Error executing the SQL statement:", error);
         return;
       }
 
-      console.log("New side inserted successfully!");
+      console.log("Polls:");
+      console.log(results);
       connection.end();
     });
   });
 };
 
-export default CreateSide;
+export default viewAllPolls;

@@ -1,9 +1,9 @@
 import { createConnection } from "mysql";
-const connection = createConnection({
+const database = createConnection({
   host: "localhost",
   user: "root",
   password: "",
   database: "test",
   connectionLimit: 10,
 });
-export default connection;
+export default database;

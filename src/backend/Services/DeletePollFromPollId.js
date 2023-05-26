@@ -1,6 +1,6 @@
 import connection from "../database";
 
-const deletePoll = (poll_id) => {
+const DeletePollFromPollId = (poll_id) => {
   const query = `
     DELETE FROM vote
     WHERE poll_id = '${poll_id}';
@@ -29,4 +29,4 @@ const deletePoll = (poll_id) => {
     });
   });
 };
-export default deletePoll;
+export default DeletePollFromPollId;
