@@ -7,16 +7,14 @@
         class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16"
       >
         <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-          <h1
-            class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-          >
-            {{ product.name }}
+          <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+            {{ poll.name }}
           </h1>
         </div>
 
         <!-- Options -->
         <div class="mt-4 lg:row-span-3 lg:mt-0">
-          <h2 class="sr-only">Product information</h2>
+          <h2 class="sr-only">Poll information</h2>
           <form class="mt-10">
             <!-- Sizes -->
             <div class="mt-10">
@@ -26,31 +24,23 @@
 
               <RadioGroup v-model="selectedSize" class="mt-4">
                 <RadioGroupLabel class="sr-only">Choose a size</RadioGroupLabel>
-                <div
-                  class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
-                >
+                <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
                   <RadioGroupOption
                     as="template"
-                    v-for="size in product.sizes"
-                    :key="size.name"
-                    :value="size"
-                    :disabled="!size.inStock"
+                    v-for="side in poll.sides"
+                    :key="side.name"
+                    :value="side"
                     v-slot="{ active, checked }"
                   >
                     <div
                       :class="[
-                        size.inStock
-                          ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                          : 'cursor-not-allowed bg-gray-50 text-gray-200',
+                        'cursor-pointer bg-white text-gray-900 shadow-sm',
                         active ? 'ring-2 ring-indigo-500' : '',
                         'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6',
                       ]"
                     >
-                      <RadioGroupLabel as="span">{{
-                        size.name
-                      }}</RadioGroupLabel>
+                      <RadioGroupLabel as="span">{{ side.name }}</RadioGroupLabel>
                       <span
-                        v-if="size.inStock"
                         :class="[
                           active ? 'border' : 'border-2',
                           checked ? 'border-indigo-500' : 'border-transparent',
@@ -58,26 +48,6 @@
                         ]"
                         aria-hidden="true"
                       />
-                      <span
-                        v-else
-                        aria-hidden="true"
-                        class="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                      >
-                        <svg
-                          class="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                          viewBox="0 0 100 100"
-                          preserveAspectRatio="none"
-                          stroke="currentColor"
-                        >
-                          <line
-                            x1="0"
-                            y1="100"
-                            x2="100"
-                            y2="0"
-                            vector-effect="non-scaling-stroke"
-                          />
-                        </svg>
-                      </span>
                     </div>
                   </RadioGroupOption>
                 </div>
@@ -93,15 +63,13 @@
           </form>
         </div>
 
-        <div
-          class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6"
-        >
+        <div class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
           <!-- Description and details -->
           <div>
             <h3 class="sr-only">Description</h3>
 
             <div class="space-y-6">
-              <p class="text-base text-gray-900">{{ product.description }}</p>
+              <p class="text-base text-gray-900">{{ poll.description }}</p>
             </div>
           </div>
 
@@ -110,22 +78,12 @@
 
             <div class="mt-4">
               <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
-                <li
-                  v-for="highlight in product.highlights"
-                  :key="highlight"
-                  class="text-gray-400"
-                >
-                  <span class="text-gray-600">{{ highlight }}</span>
+                <li v-for="side in poll.sides"
+                :key="side.name"
+                :value="side" class="text-gray-400">
+                  <span class="text-gray-600">{{ side.info }}</span>
                 </li>
               </ul>
-            </div>
-          </div>
-
-          <div class="mt-10">
-            <h2 class="text-sm font-medium text-gray-900">Details</h2>
-
-            <div class="mt-4 space-y-6">
-              <p class="text-sm text-gray-600">{{ product.details }}</p>
             </div>
           </div>
         </div>
@@ -138,54 +96,24 @@
 <script setup>
 import { ref } from "vue";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
+import polls from "../backend/table/poll.json"
+import sideinfo from "../backend/table/side.json"
+import { pollid } from '../backend/table/pollid';
+let pollId=window.pollid
+let tempNamePoll= "no"
+let tempInfoPoll= "no"
+for (let i = 0; i < polls.length; i++) {
+    if (polls[i].id === pollId) {
+      tempNamePoll=polls[i].name;
+      tempInfoPoll=polls[i].info;
+    }
+  }
+const Sidedata = sideinfo.filter(item => item.poll_id === pollId);
 
-const product = {
-  name: "ชื่อ Poll",
-  price: "$192",
-  href: "#",
-  breadcrumbs: [
-    { id: 1, name: "Men", href: "#" },
-    { id: 2, name: "Clothing", href: "#" },
-  ],
-  images: [
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
-      alt: "Two each of gray, white, and black shirts laying flat.",
-    },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
-      alt: "Model wearing plain black basic tee.",
-    },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-      alt: "Model wearing plain gray basic tee.",
-    },
-    {
-      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
-      alt: "Model wearing plain white basic tee.",
-    },
-  ],
-  colors: [
-    { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
-  ],
-  sizes: [
-    { name: "1", inStock: true },
-    { name: "2", inStock: true },
-    { name: "3", inStock: true },
-    { name: "4", inStock: true },
-  ],
-  description:
-    'The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: "Black". Need to add an extra pop of color to your outfit? Our white tee has you covered.',
-  highlights: [
-    "111111111111111111111111",
-    "222222222222222222222222",
-    "333333333333333333333333",
-    "444444444444444444444444",
-  ],
-  details:
-    'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+const poll = {
+  name: tempNamePoll,
+  sides: Sidedata,
+  description:tempInfoPoll,
 };
-const selectedSize = ref(product.sizes[2]);
+const selectedSize = ref(poll.sides[2]);
 </script>
