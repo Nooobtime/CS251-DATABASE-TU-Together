@@ -1,26 +1,22 @@
 import connection from "../database";
-const CreateSide = (id, poll_id, name, info) => {
+export default function CreateSide(id, poll_id, name, info) {
   const query = `
-    INSERT INTO side (id, poll_id, name, info)
-    VALUES ('${id}', '${poll_id}', '${name}', '${info}');
-  `;
-
-  connection.connect((err) => {
-    if (err) {
-      console.error("Error connecting to the database:", err);
-      return;
+        INSERT INTO side (id, poll_id, name, info)
+        VALUES
+        (
+          '${id}',
+          '${poll_id}',
+          '${name}',
+          '${info}'
+        );
+      `;
+  connection.query(query, function (error) {
+    if (error) {
+      console.error("Error executing the query:", error);
+    } else {
+      console.log(
+        `Create ${name} in ${poll_id} Poll,side id is ${id} and info is ${info}`
+      );
     }
-
-    connection.query(query, (error) => {
-      if (error) {
-        console.error("Error executing the SQL statement:", error);
-        return;
-      }
-
-      console.log("New side inserted successfully!");
-      connection.end();
-    });
   });
-};
-
-export default CreateSide;
+}

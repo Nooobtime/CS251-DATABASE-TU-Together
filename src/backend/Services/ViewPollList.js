@@ -1,7 +1,7 @@
 import connection from "../database";
-export default function ViewPoll(id) {
+export default function ViewPollList() {
   return new Promise((resolve, reject) => {
-    const query = `SELECT * FROM poll WHERE id = '${id}';`;
+    const query = `SELECT * FROM poll`;
 
     connection.query(query, function (error, results) {
       if (error) {
@@ -14,7 +14,7 @@ export default function ViewPoll(id) {
   });
 }
 /*
-ViewPoll(123)
+ViewPollList()
   .then((results) => {
     // Handle the retrieved poll data
     console.log(results);

@@ -63,7 +63,6 @@
 <script>
 import axios from "axios";
 import VueCookie from "vue-cookie";
-import database from "../backend/database";
 
 export default {
   data() {

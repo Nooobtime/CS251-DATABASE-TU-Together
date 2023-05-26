@@ -5,10 +5,9 @@ import NavBar from "./components/NavBar.vue";
 import Footer from "./components/footer.vue";
 import { RouterLink, RouterView } from "vue-router";
 import "./style.css";
-import database from "./backend/database";
+
 const app = createApp(App);
 app.use(router);
-app.use(database);
 app.component("NavBar", NavBar);
 app.component("Footer", Footer);
 app.component("RouterLink", RouterLink);

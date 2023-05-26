@@ -1,20 +1,14 @@
 import connection from "../database";
-const AddUser = (userId, isAdmin) => {
-  const query = `INSERT INTO user (id, isAdmin) VALUES ('${userId}', ${isAdmin})`;
-  connection.connect((err) => {
-    if (err) {
-      console.error("Error connecting to the database:", err);
-      return;
+export default function AddUser(id, isAdmin) {
+  const query = `
+  INSERT INTO user (id, isAdmin)
+  VALUES ('${id}', ${isAdmin});
+`;
+  connection.query(query, function (error) {
+    if (error) {
+      console.error("Error executing the query:", error);
+    } else {
+      console.log(`Add ${id} and ${isAdmin} Admin`);
     }
-    connection.query(query, (error) => {
-      if (error) {
-        console.error("Error executing the SQL statement:", error);
-        return;
-      }
-      console.log("New user inserted successfully!");
-      connection.end();
-    });
   });
-};
-
-export default AddUser;
+}

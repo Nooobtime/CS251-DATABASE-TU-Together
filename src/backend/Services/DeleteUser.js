@@ -1,28 +1,13 @@
 import connection from "../database";
-
-const DeletePoll = (user_id) => {
+export default function DeletePoll(id) {
   const query = `
-      DELETE FROM
-      user
-      WHERE
-      id = '${user_id}';
+      DELETE FROM user WHERE id = '${id}';
     `;
-
-  connection.connect((err) => {
-    if (err) {
-      console.error("Error connecting to the database:", err);
-      return;
+  connection.query(query, function (error) {
+    if (error) {
+      console.error("Error executing the query:", error);
+    } else {
+      console.log(`delete user ${id}`);
     }
-
-    connection.query(query, (error) => {
-      if (error) {
-        console.error("Error executing the SQL statement:", error);
-        return;
-      }
-
-      console.log("Poll deleted successfully!");
-      connection.end();
-    });
   });
-};
-export default DeletePoll;
+}

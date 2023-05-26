@@ -1,37 +1,25 @@
 import connection from "../database";
-
-const ViewUserIsAdmin = (userId) => {
-  const query = `
-    SELECT
-      isAdmin
-    FROM
-      user
-    WHERE
-      id = '${userId}';
-  `;
-
-  connection.connect((err) => {
-    if (err) {
-      console.error("Error connecting to the database:", err);
-      return;
-    }
-
-    connection.query(query, (error, results) => {
+export default function ViewUserIsAdmin(id) {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT isAdmin FROM user WHERE id = '${id}';`;
+    connection.query(query, function (error, results) {
       if (error) {
-        console.error("Error executing the SQL statement:", error);
-        return;
-      }
-
-      if (results.length === 0) {
-        console.log("User not found!");
+        console.error("Error executing the query:", error);
+        reject(error);
       } else {
-        const isAdmin = results[0].isAdmin;
-        console.log("User isAdmin status:", isAdmin);
+        resolve(results);
       }
-
-      connection.end();
     });
   });
-};
-
-export default ViewUserIsAdmin;
+}
+/*
+ViewUserIsAdmin(123)
+  .then((results) => {
+    // Handle the retrieved poll data
+    console.log(results);
+  })
+  .catch((error) => {
+    // Handle any errors that occurred during the query
+    console.error(error);
+  });
+*/

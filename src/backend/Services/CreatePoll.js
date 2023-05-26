@@ -1,23 +1,19 @@
 import connection from "../database";
-const CreatePoll = (id, name, info) => {
+export default function CreatePoll(id, name, info) {
   const query = `
-    INSERT INTO poll (id, name, info)
-    VALUES ('${id}', '${name}', '${info}')
-  `;
-  connection.connect((err) => {
-    if (err) {
-      console.error("Error connecting to the database:", err);
-      return;
+      INSERT INTO poll (id, name, info)
+      VALUES
+      (
+        '${id}',
+        '${name}',
+        '${info}'
+      );
+    `;
+  connection.query(query, function (error) {
+    if (error) {
+      console.error("Error executing the query:", error);
+    } else {
+      console.log(`Create ${name} Poll, id is ${id} and info is ${info}`);
     }
-    connection.query(query, (error) => {
-      if (error) {
-        console.error("Error executing the SQL statement:", error);
-        return;
-      }
-      console.log("New user inserted successfully!");
-      connection.end();
-    });
   });
-};
-
-export default CreatePoll;
+}

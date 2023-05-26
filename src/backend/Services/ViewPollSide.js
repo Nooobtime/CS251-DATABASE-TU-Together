@@ -1,31 +1,26 @@
 import connection from "../database";
+export default function ViewPollSide(id) {
+  return new Promise((resolve, reject) => {
+    const query = `SELECT * FROM side WHERE id = '${id}';`;
 
-const ViewPollSide = (pollId) => {
-  const query = `
-    SELECT
-      *
-    FROM
-      side
-    WHERE
-      poll_id = '${pollId}';
-  `;
-
-  connection.connect((err) => {
-    if (err) {
-      console.error("Error connecting to the database:", err);
-      return;
-    }
-
-    connection.query(query, (error, results) => {
+    connection.query(query, function (error, results) {
       if (error) {
-        console.error("Error executing the SQL statement:", error);
-        return;
+        console.error("Error executing the query:", error);
+        reject(error);
+      } else {
+        resolve(results);
       }
-
-      console.log("Sides retrieved successfully:", results);
-      connection.end();
     });
   });
-};
-
-export default ViewPollSide;
+}
+/*
+ViewPollSide(123)
+  .then((results) => {
+    // Handle the retrieved poll data
+    console.log(results);
+  })
+  .catch((error) => {
+    // Handle any errors that occurred during the query
+    console.error(error);
+  });
+*/
