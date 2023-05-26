@@ -66,7 +66,7 @@
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
         <div
-          v-for="quote in quotes"
+          v-for="quote in commentQuotes"
           :key="quote.id"
           class="mx-auto flex max-w-xs flex-col gap-y-4"
         >
@@ -84,8 +84,9 @@
   </div>
   <Footer />
 </template>
+
 <script setup>
-const quotes = [
+const commentQuotes = [
   { id: 1, description: "เลือกสิ่งที่ถูกใจ ใช่กับตัวเรา", title: "เลือก" },
   { id: 2, description: "ไม่นอนหลับทับสิทธิ์", title: "ใช้สิทธิ์" },
   { id: 3, description: "เกรด D ก็ได้", title: "ลงความเห็น" },

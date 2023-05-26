@@ -8,7 +8,7 @@
       >
         <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
           <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            {{ poll.name }}
+            {{ pollName }}
           </h1>
         </div>
 
@@ -22,12 +22,12 @@
                 <h3 class="text-sm font-medium text-gray-900">เลือก</h3>
               </div>
 
-              <RadioGroup v-model="selectedSize" class="mt-4">
+              <RadioGroup v-model="selectedSide" class="mt-4">
                 <RadioGroupLabel class="sr-only">Choose a size</RadioGroupLabel>
                 <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
                   <RadioGroupOption
                     as="template"
-                    v-for="side in poll.sides"
+                    v-for="side in pollSides"
                     :key="side.name"
                     :value="side"
                     v-slot="{ active, checked }"
@@ -69,7 +69,7 @@
             <h3 class="sr-only">Description</h3>
 
             <div class="space-y-6">
-              <p class="text-base text-gray-900">{{ poll.description }}</p>
+              <p class="text-base text-gray-900">{{ pollDescription }}</p>
             </div>
           </div>
 
@@ -78,7 +78,7 @@
 
             <div class="mt-4">
               <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
-                <li v-for="side in poll.sides"
+                <li v-for="side in pollSides"
                 :key="side.name"
                 :value="side" class="text-gray-400">
                   <span class="text-gray-600">{{ side.info }}</span>
@@ -99,21 +99,22 @@ import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 import polls from "../backend/table/poll.json"
 import sideinfo from "../backend/table/side.json"
 import { pollid } from '../backend/table/pollid';
-let pollId=window.pollid
-let tempNamePoll= "no"
-let tempInfoPoll= "no"
+
+let pollId = window.pollid;
+let tempPollName = "no";
+let tempPollDescription = "no";
+
 for (let i = 0; i < polls.length; i++) {
     if (polls[i].id === pollId) {
-      tempNamePoll=polls[i].name;
-      tempInfoPoll=polls[i].info;
+      tempPollName = polls[i].name;
+      tempPollDescription = polls[i].info;
     }
-  }
-const Sidedata = sideinfo.filter(item => item.poll_id === pollId);
+}
 
-const poll = {
-  name: tempNamePoll,
-  sides: Sidedata,
-  description:tempInfoPoll,
-};
-const selectedSize = ref(poll.sides[2]);
+const sideData = sideinfo.filter(item => item.poll_id === pollId);
+
+const pollName = tempPollName;
+const pollDescription = tempPollDescription;
+const pollSides = sideData;
+const selectedSide = ref(pollSides[2]);
 </script>

@@ -1,72 +1,84 @@
 <template>
   <NavBar />
+  <div class="min-h-screen bg-gray-100">
+    <div class="container mx-auto py-8">
+      <h1 class="text-3xl font-bold mb-6">Create Poll</h1>
 
-  <div class="p-4">
-    <h1 class="text-2xl font-bold mb-4">Create Poll</h1>
-    <div class="mb-4">
-      <label for="pollName" class="block font-semibold mb-1">Poll Name:</label>
-      <input
-        type="text"
-        id="pollName"
-        v-model="pollName"
-        placeholder="Enter poll name"
-        class="w-full border border-gray-300 rounded py-2 px-3"
-      />
-      <label for="pollInfo" class="block font-semibold mt-2 mb-1"
-        >Poll Info:</label
-      >
-      <input
-        type="text"
-        id="pollInfo"
-        v-model="pollInfo"
-        placeholder="Enter poll information"
-        class="w-full border border-gray-300 rounded py-2 px-3"
-      />
-    </div>
-
-    <ul>
-      <li v-for="item in items" :key="item.a" class="mb-2">
-        <div>
-          Side name: {{ item.a }} Side description:{{ item.b }}
-          <button
-            @click="deleteItem(item)"
-            class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded ml-2"
-          >
-            Delete Option
-          </button>
+      <div class="bg-white shadow-md rounded-md p-6 mb-6">
+        <div class="mb-4">
+          <label for="pollName" class="font-semibold mb-1 mr-2">Poll Name:</label>
+          <input
+            type="text"
+            id="pollName"
+            v-model="pollName"
+            placeholder="Enter poll name"
+            class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+          />
         </div>
-        <span class="font-semibold"> </span>
-      </li>
-    </ul>
-    <div class="mb-4">
-      <input
-        type="text"
-        v-model="inputA"
-        placeholder="Enter option name"
-        class="border border-gray-300 rounded py-2 px-3 mb-2"
-      />
-      <input
-        type="text"
-        v-model="inputB"
-        placeholder="Enter option description"
-        class="border border-gray-300 rounded py-2 px-3"
-      />
-      <button
-        @click="addItem"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"
-      >
-        Add Option
-      </button>
+
+        <div class="mb-4">
+          <label for="pollInfo" class="block font-semibold mb-1">Poll Info:</label>
+          <input
+            type="text"
+            id="pollInfo"
+            v-model="pollInfo"
+            placeholder="Enter poll information"
+            class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <ul>
+            <li v-for="option in options" :key="option.name" class="mb-2">
+              <div class="flex items-center">
+                <span class="mr-2 font-semibold">Option name:</span>
+                <span>{{ option.name }}</span>
+                <span class="ml-4 mr-2 font-semibold">Option description:</span>
+                <span>{{ option.description }}</span>
+                <button
+                  @click="deleteOption(option)"
+                  class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded ml-2"
+                >
+                  Delete Option
+                </button>
+              </div>
+            </li>
+          </ul>
+
+          <div class="flex mb-4">
+            <input
+              type="text"
+              v-model="newOptionName"
+              placeholder="Enter option name"
+              class="border border-gray-300 rounded py-2 px-3 flex-grow focus:outline-none focus:ring-blue-500"
+            />
+            <input
+              type="text"
+              v-model="newOptionDescription"
+              placeholder="Enter option description"
+              class="border border-gray-300 rounded py-2 px-3 flex-grow ml-2 focus:outline-none focus:ring-blue-500"
+            />
+            <button
+              @click="addOption"
+              class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded ml-2"
+            >
+              Add Option
+            </button>
+          </div>
+        </div>
+
+        <button
+          @click="createPoll"
+          :disabled="!pollName || !pollInfo || options.length === 0"
+          class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mt-4"
+        >
+          Create Poll
+        </button>
+      </div>
     </div>
-    <button
-      @click="createPoll"
-      :disabled="!pollName || !pollInfo || items.length === 0"
-      class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mt-4"
-    >
-      Create Poll
-    </button>
+
+    <Footer />
   </div>
-  <Footer />
 </template>
 
 <script>
@@ -75,23 +87,23 @@ export default {
     return {
       pollName: "",
       pollInfo: "",
-      inputA: "",
-      inputB: "",
-      items: [],
+      newOptionName: "",
+      newOptionDescription: "",
+      options: [],
     };
   },
   methods: {
-    addItem() {
-      if (this.inputA.trim() !== "" && this.inputB.trim() !== "") {
-        this.items.push({ a: this.inputA, b: this.inputB });
-        this.inputA = "";
-        this.inputB = "";
+    addOption() {
+      if (this.newOptionName.trim() !== "" && this.newOptionDescription.trim() !== "") {
+        this.options.push({ name: this.newOptionName, description: this.newOptionDescription });
+        this.newOptionName = "";
+        this.newOptionDescription = "";
       }
     },
-    deleteItem(item) {
-      const index = this.items.indexOf(item);
+    deleteOption(option) {
+      const index = this.options.indexOf(option);
       if (index > -1) {
-        this.items.splice(index, 1);
+        this.options.splice(index, 1);
       }
     },
     createPoll() {
@@ -101,17 +113,16 @@ export default {
         info: this.pollInfo,
       };
 
-      let sides = this.items.map((item, index) => {
+      let options = this.options.map((option, index) => {
         return {
           id: (index + 1).toString(),
           poll_id: poll.id,
-          name: item.a,
-          info: item.b,
+          name: option.name,
+          description: option.description,
         };
       });
-      //this.$router.push("/polllist");
       console.log(poll);
-      console.log(sides);
+      console.log(options);
     },
   },
 };
