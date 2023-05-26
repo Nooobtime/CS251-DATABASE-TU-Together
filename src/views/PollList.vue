@@ -3,17 +3,17 @@
   <h1 class="text-center text-3xl">รายชื่อ poll</h1>
   <ul role="list" class="divide-y divide-gray-100 mx-4 md:mx-36">
     <li
-      v-for="rival in side"
-      :key="rival.info"
+      v-for="Poll in Polls"
+      :key="Poll.info"
       class="flex justify-between gap-x-6 py-5"
     >
       <div class="flex gap-x-4">
         <div class="min-w-0 flex-auto">
           <p class="text-sm font-semibold leading-6 text-gray-900">
-            {{ rival.info }}
+            {{ Poll.info }}
           </p>
           <p class="mt-1 truncate text-xs leading-5 text-gray-500">
-            {{ rival.info }}
+            {{ Poll.info }}
           </p>
         </div>
       </div>
@@ -32,8 +32,7 @@
   <Footer />
 </template>
 <script setup>
-import POLLIST from "../backend/Services/ViewPollList"
-let side = [
+let Polls = [
   {
     name: "Poll Name 1",
     info: "ลายละเอียด 1",
@@ -45,18 +44,4 @@ let side = [
     id: "ลายละเอียด 1",
   },
 ];
-function getAllPoll() {
-  //get poll in poll table from data base
-  ViewPollList()
-  .then((results) => {
-    //side = results 
-    console.log(results);
-  })
-  .catch((error) => {
-    // Handle any errors that occurred during the query
-    console.error(error);
-  });
-  
-  
-}
 </script>
