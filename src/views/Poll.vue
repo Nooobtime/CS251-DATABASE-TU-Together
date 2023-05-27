@@ -1,7 +1,7 @@
 <template>
   <NavBar />
   <div class="bg-white">
-    <div class="">
+    <div>
       <!-- Product info -->
       <div
         class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16"
@@ -30,7 +30,6 @@
                   class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
                 >
                   <RadioGroupOption
-                    as="template"
                     v-for="side in pollSides"
                     :key="side.name"
                     :value="side"
@@ -61,7 +60,8 @@
             <!-- Vote Button (Conditional) -->
             <button
               v-if="isPollOpen"
-              type="submit"
+              @click="vote"
+              type="button"
               class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Vote
@@ -92,10 +92,9 @@
                   :value="side"
                   class="text-gray-400"
                 >
-                  <span class="text-gray-600">
-                    {{ side.id }} {{ side.name }}
-                    Info:{{side.info}}
-                  </span>
+                  <span class="text-gray-600"
+                    >{{ side.id }} {{ side.name }} Info:{{ side.info }}</span
+                  >
                 </li>
               </ul>
             </div>
@@ -109,15 +108,14 @@
 
 <script setup>
 import VueCookie from "vue-cookie";
-
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import { pollid } from "../backend/table/pollid";
+
 let cookiePollsString = VueCookie.get("cookiePolls");
 let cookieSidesString = VueCookie.get("cookieSides");
 let cookiePollIdString = VueCookie.get("cookiePollId");
 let cookiePolls = cookiePollsString ? JSON.parse(cookiePollsString) : [];
 let cookieSides = cookieSidesString ? JSON.parse(cookieSidesString) : [];
-let cookiePollId = cookiePollsString ? JSON.parse(cookiePollIdString) : [];
+let cookiePollId = cookiePollIdString ? JSON.parse(cookiePollIdString) : [];
 let pollId = cookiePollId;
 let tempPollName = "no";
 let tempPollDescription = "no";
@@ -128,15 +126,69 @@ for (let i = 0; i < cookiePolls.length; i++) {
     tempPollDescription = cookiePolls[i].info;
   }
 }
+
 const pollName = tempPollName;
 const pollDescription = tempPollDescription;
 const pollSides = cookieSides.filter((item) => item.poll_id === pollId);
+const pollStartDate = cookiePolls.find((poll) => poll.id === pollId)?.startDate;
+const pollEndDate = cookiePolls.find((poll) => poll.id === pollId)?.endDate;
+
 const isPollOpen = () => {
   const now = new Date();
   const startDate = new Date(pollStartDate);
   const endDate = new Date(pollEndDate);
   return now >= startDate && now <= endDate;
 };
+
+const vote = () => {
+  const userDataString = VueCookie.get("TUTogetherUserData");
+  let userData;
+  let userid;
+  try {
+    userData = JSON.parse(userDataString);
+    userid = userData.username;
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+  }
+  if (checkIfUserVoted(pollVotes, userid, pollId)) {
+    alert("You have already voted for this poll.");
+  } else {
+    const selectedOption = pollSides.find((side) => side.checked);
+    if (!selectedOption) {
+      alert("Please select an option before voting.");
+      return;
+    }
+
+    const sideId = selectedOption.id;
+    const voteData = {
+      user_id: userid,
+      poll_id: pollId,
+      side_id: sideId,
+    };
+
+    let cookieVotesString = VueCookie.get("cookieVotes");
+    let cookieVotes = cookieVotesString ? JSON.parse(cookieVotesString) : [];
+    cookieVotes.push(voteData);
+    VueCookie.set("cookieVotes", JSON.stringify(cookieVotes), {
+      expires: "1d",
+    });
+
+    alert("Vote submitted!");
+  }
+};
+
+const pollVotes = VueCookie.get("cookieVotes")
+  ? JSON.parse(VueCookie.get("cookieVotes"))
+  : [];
+
+function checkIfUserVoted(pollVotes, userId, pollId) {
+  for (let i = 0; i < pollVotes.length; i++) {
+    if (pollVotes[i].user_id === userId && pollVotes[i].poll_id === pollId) {
+      return true; // User has voted in the poll
+    }
+  }
+  return false; // User has not voted in the poll
+}
 </script>
 
 <style>

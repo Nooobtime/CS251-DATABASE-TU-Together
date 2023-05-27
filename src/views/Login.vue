@@ -166,6 +166,19 @@ export default {
           info: "Comingsoon Side B info",
         },
       ];
+      const votes = [
+        {
+          user_id: "6409650001",
+          poll_id: "0000000001",
+          side_id: "1",
+        },
+        {
+          user_id: "6409650002",
+          poll_id: "0000000001",
+          side_id: "1",
+        },
+      ];
+      VueCookie.set("cookieVotes", JSON.stringify(votes));
       VueCookie.set("cookiePolls", JSON.stringify(polls));
       VueCookie.set("cookieUsers", JSON.stringify(users));
       VueCookie.set("cookieSides", JSON.stringify(sides));
@@ -173,6 +186,7 @@ export default {
     getUserData() {
       // Get the userData cookie
       let storedData = VueCookie.get("TUTogetherUserData");
+      console.log(storedData.username)
       if (storedData) {
         alert("already login");
         this.$router.push("/");
