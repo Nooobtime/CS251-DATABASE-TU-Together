@@ -139,6 +139,8 @@ export default {
       this.$router.push(href);
     },
     isAdmin() {
+      VueCookie.get("TUTogetherUserData");
+
       //get userid from cookie
       //https://restapi.tu.ac.th/tuapi/docs/GettingAuth
       //check userid from database admin?

@@ -43,11 +43,10 @@
                 ค้าหา poll
               </a>
             </router-link>
-            <router-link to="/createrequest">
+            <router-link to="/">
               <a class="text-sm font-semibold leading-6 text-white"
-                >ขอสร้างpoll<span aria-hidden="true">→</span></a
-              ></router-link
-            >
+                ><span aria-hidden="true"></span></a
+            ></router-link>
           </div>
         </div>
         <div class="relative mt-16 h-80 lg:mt-8">

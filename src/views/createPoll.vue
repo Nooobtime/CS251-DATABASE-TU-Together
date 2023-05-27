@@ -104,7 +104,8 @@
             !pollInfo ||
             options.length === 0 ||
             !startDate ||
-            !endDate
+            !endDate ||
+            startDate >= endDate
           "
           class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mt-4"
         >
@@ -118,9 +119,7 @@
 </template>
 
 <script>
-import fs from "fs"; // Import the fs module
-import pollData from "../backend/table/poll.json"; // Import the poll.json file
-import sideData from "../backend/table/side.json"; // Import the side.json file
+import VueCookie from "vue-cookie";
 
 export default {
   data() {
@@ -131,7 +130,7 @@ export default {
       endDate: "",
       newOptionName: "",
       newOptionDescription: "",
-      options: [], // Define the options array
+      options: [],
     };
   },
   methods: {
@@ -155,48 +154,45 @@ export default {
       }
     },
     createPoll() {
-      try {
-        let poll = {
-          id: (pollData.length + 1).toString(),
-          name: this.pollName,
-          info: this.pollInfo,
-          startDate: this.startDate,
-          endDate: this.endDate,
-        };
-
-        let options = this.options.map((option, index) => {
-          return {
-            id: (sideData.length + index + 1).toString(),
-            poll_id: poll.id,
-            name: option.name,
-            info: option.description,
-          };
-        });
-
-        // Update the local pollData array
-        pollData.push(poll);
-
-        // Update the local sideData array
-        options.forEach((option) => {
-          sideData.push(option);
-        });
-
-        // Write the updated data to the local JSON files
-        let pollDataJSON = JSON.stringify(pollData, null, 2);
-        let sideDataJSON = JSON.stringify(sideData, null, 2);
-
-        // Write the updated data to the poll.json file
-        fs.writeFileSync("./src/backend/table/poll.json", pollDataJSON);
-
-        // Write the updated data to the side.json file
-        fs.writeFileSync("./src/backend/table/side.json", sideDataJSON);
-
-        // Navigate back to the homepage
-      } catch (error) {
-        console.error("An error occurred while creating the poll:", error);
-      }finally{
-        this.$router.push("/polllist");
+      if (this.startDate >= this.endDate) {
+        alert("Please select a valid start and end date.");
+        return;
       }
+
+      let cookiePollsString = VueCookie.get("cookiePolls");
+      let cookieSidesString = VueCookie.get("cookieSides");
+      let cookiePolls = cookiePollsString ? JSON.parse(cookiePollsString) : [];
+      let cookieSides = cookieSidesString ? JSON.parse(cookieSidesString) : [];
+
+      let poll = {
+        id: (cookiePolls.length + 1).toString(),
+        name: this.pollName,
+        info: this.pollInfo,
+        startDate: this.startDate,
+        endDate: this.endDate,
+      };
+
+      let options = this.options.map((option, index) => {
+        return {
+          id: (index + 1).toString(), // Use index + 1 as the side ID
+          poll_id: poll.id,
+          name: option.name,
+          info: option.description,
+        };
+      });
+      cookiePolls.push(poll);
+      options.forEach((option) => {
+        cookieSides.push(option);
+      });
+      VueCookie.set("cookiePolls", JSON.stringify(cookiePolls), {
+        expires: "1d",
+      });
+      VueCookie.set("cookieSides", JSON.stringify(cookieSides), {
+        expires: "1d",
+      });
+      console.log(cookiePolls);
+      console.log(cookieSides);
+      this.$router.push("/polllist");
     },
   },
 };

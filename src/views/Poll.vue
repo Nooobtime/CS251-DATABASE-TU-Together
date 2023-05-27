@@ -24,7 +24,7 @@
                 <h3 class="text-sm font-medium text-gray-900">เลือก</h3>
               </div>
 
-              <RadioGroup v-model="selectedSide" class="mt-4">
+              <RadioGroup class="mt-4">
                 <RadioGroupLabel class="sr-only">Choose a size</RadioGroupLabel>
                 <div
                   class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
@@ -43,9 +43,7 @@
                         'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6',
                       ]"
                     >
-                      <RadioGroupLabel as="span">{{
-                        side.id
-                      }}</RadioGroupLabel>
+                      <RadioGroupLabel as="span">{{ side.id }}</RadioGroupLabel>
                       <span
                         :class="[
                           active ? 'border' : 'border-2',
@@ -53,14 +51,16 @@
                           'pointer-events-none absolute -inset-px rounded-md',
                         ]"
                         aria-hidden="true"
-                      />
+                      ></span>
                     </div>
                   </RadioGroupOption>
                 </div>
               </RadioGroup>
             </div>
 
+            <!-- Vote Button (Conditional) -->
             <button
+              v-if="isPollOpen"
               type="submit"
               class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
@@ -92,7 +92,10 @@
                   :value="side"
                   class="text-gray-400"
                 >
-                  <span class="text-gray-600">side id:{{ side.id }} side name:{{ side.name }} side info:{{side.info}}</span>
+                  <span class="text-gray-600">
+                    {{ side.id }} {{ side.name }}
+                    Info:{{side.info}}
+                  </span>
                 </li>
               </ul>
             </div>
@@ -105,27 +108,39 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
-import polls from "../backend/table/poll.json";
-import sideinfo from "../backend/table/side.json";
-import { pollid } from "../backend/table/pollid";
+import VueCookie from "vue-cookie";
 
-let pollId = window.pollid;
+import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
+import { pollid } from "../backend/table/pollid";
+let cookiePollsString = VueCookie.get("cookiePolls");
+let cookieSidesString = VueCookie.get("cookieSides");
+let cookiePollIdString = VueCookie.get("cookiePollId");
+let cookiePolls = cookiePollsString ? JSON.parse(cookiePollsString) : [];
+let cookieSides = cookieSidesString ? JSON.parse(cookieSidesString) : [];
+let cookiePollId = cookiePollsString ? JSON.parse(cookiePollIdString) : [];
+let pollId = cookiePollId;
 let tempPollName = "no";
 let tempPollDescription = "no";
 
-for (let i = 0; i < polls.length; i++) {
-  if (polls[i].id === pollId) {
-    tempPollName = polls[i].name;
-    tempPollDescription = polls[i].info;
+for (let i = 0; i < cookiePolls.length; i++) {
+  if (cookiePolls[i].id === pollId) {
+    tempPollName = cookiePolls[i].name;
+    tempPollDescription = cookiePolls[i].info;
   }
 }
-
-const sideData = sideinfo.filter((item) => item.poll_id === pollId);
-
 const pollName = tempPollName;
 const pollDescription = tempPollDescription;
-const pollSides = sideData;
-const selectedSide = ref(pollSides[2]);
+const pollSides = cookieSides.filter((item) => item.poll_id === pollId);
+const isPollOpen = () => {
+  const now = new Date();
+  const startDate = new Date(pollStartDate);
+  const endDate = new Date(pollEndDate);
+  return now >= startDate && now <= endDate;
+};
 </script>
+
+<style>
+.container {
+  max-width: 600px;
+}
+</style>

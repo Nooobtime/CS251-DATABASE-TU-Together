@@ -102,6 +102,73 @@ export default {
           console.error(error);
           this.error = error.response.data.message;
         });
+      const users = [{ id: "6409650089", isAdmin: true }];
+
+      const polls = [
+        {
+          id: "0000000001",
+          name: "Expire poll",
+          info: "Expire poll Info",
+          startDate: "2023-01-01",
+          endDate: "2023-01-31",
+        },
+        {
+          id: "0000000002",
+          name: "On going poll",
+          info: "On going poll Info",
+          startDate: "2023-01-01",
+          endDate: "2023-12-31",
+        },
+        {
+          id: "0000000003",
+          name: "Comingsoon poll",
+          info: "Comingsoon poll Info",
+          startDate: "2023-12-01",
+          endDate: "2023-12-31",
+        },
+      ];
+
+      const sides = [
+        {
+          id: "1",
+          poll_id: "0000000001",
+          name: "Expire poll Side A",
+          info: "Expire poll Side A info",
+        },
+        {
+          id: "2",
+          poll_id: "0000000001",
+          name: "Expire poll Side B",
+          info: "Expire poll Side B info",
+        },
+        {
+          id: "1",
+          poll_id: "0000000002",
+          name: "On going poll Side A",
+          info: "On going poll Side A info",
+        },
+        {
+          id: "2",
+          poll_id: "0000000002",
+          name: "On going poll Side B",
+          info: "On going poll Side B info",
+        },
+        {
+          id: "1",
+          poll_id: "0000000003",
+          name: "Comingsoon Side A",
+          info: "Comingsoon Side A info",
+        },
+        {
+          id: "2",
+          poll_id: "0000000003",
+          name: "Comingsoon Side B",
+          info: "Comingsoon Side B info",
+        },
+      ];
+      VueCookie.set("cookiePolls", JSON.stringify(polls));
+      VueCookie.set("cookieUsers", JSON.stringify(users));
+      VueCookie.set("cookieSides", JSON.stringify(sides));
     },
     getUserData() {
       // Get the userData cookie
