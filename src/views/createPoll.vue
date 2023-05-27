@@ -6,7 +6,9 @@
 
       <div class="bg-white shadow-md rounded-md p-6 mb-6">
         <div class="mb-4">
-          <label for="pollName" class="font-semibold mb-1 mr-2">Poll Name:</label>
+          <label for="pollName" class="font-semibold mb-1 mr-2"
+            >Poll Name:</label
+          >
           <input
             type="text"
             id="pollName"
@@ -17,13 +19,41 @@
         </div>
 
         <div class="mb-4">
-          <label for="pollInfo" class="block font-semibold mb-1">Poll Info:</label>
+          <label for="pollInfo" class="block font-semibold mb-1"
+            >Poll Info:</label
+          >
           <input
             type="text"
             id="pollInfo"
             v-model="pollInfo"
             placeholder="Enter poll information"
             class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+          />
+        </div>
+
+        <!-- Start Date -->
+        <div class="mb-4">
+          <label for="startDate" class="font-semibold mb-1 mr-2"
+            >Start Date:</label
+          >
+          <input
+            type="date"
+            id="startDate"
+            v-model="startDate"
+            class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+          />
+        </div>
+
+        <!-- End Date -->
+        <div class="mb-4">
+          <label for="endDate" class="font-semibold mb-1 mr-2"
+            >End Date:&nbsp;&nbsp;</label
+          >
+          <input
+            type="date"
+            id="endDate"
+            v-model="endDate"
+            class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
           />
         </div>
 
@@ -69,7 +99,13 @@
 
         <button
           @click="createPoll"
-          :disabled="!pollName || !pollInfo || options.length === 0"
+          :disabled="
+            !pollName ||
+            !pollInfo ||
+            options.length === 0 ||
+            !startDate ||
+            !endDate
+          "
           class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mt-4"
         >
           Create Poll
@@ -82,20 +118,32 @@
 </template>
 
 <script>
+import fs from "fs"; // Import the fs module
+import pollData from "../backend/table/poll.json"; // Import the poll.json file
+import sideData from "../backend/table/side.json"; // Import the side.json file
+
 export default {
   data() {
     return {
       pollName: "",
       pollInfo: "",
+      startDate: "",
+      endDate: "",
       newOptionName: "",
       newOptionDescription: "",
-      options: [],
+      options: [], // Define the options array
     };
   },
   methods: {
     addOption() {
-      if (this.newOptionName.trim() !== "" && this.newOptionDescription.trim() !== "") {
-        this.options.push({ name: this.newOptionName, description: this.newOptionDescription });
+      if (
+        this.newOptionName.trim() !== "" &&
+        this.newOptionDescription.trim() !== ""
+      ) {
+        this.options.push({
+          name: this.newOptionName,
+          description: this.newOptionDescription,
+        });
         this.newOptionName = "";
         this.newOptionDescription = "";
       }
@@ -107,23 +155,55 @@ export default {
       }
     },
     createPoll() {
-      let poll = {
-        id: "3",
-        name: this.pollName,
-        info: this.pollInfo,
-      };
-
-      let options = this.options.map((option, index) => {
-        return {
-          id: (index + 1).toString(),
-          poll_id: poll.id,
-          name: option.name,
-          description: option.description,
+      try {
+        let poll = {
+          id: (pollData.length + 1).toString(),
+          name: this.pollName,
+          info: this.pollInfo,
+          startDate: this.startDate,
+          endDate: this.endDate,
         };
-      });
-      console.log(poll);
-      console.log(options);
+
+        let options = this.options.map((option, index) => {
+          return {
+            id: (sideData.length + index + 1).toString(),
+            poll_id: poll.id,
+            name: option.name,
+            info: option.description,
+          };
+        });
+
+        // Update the local pollData array
+        pollData.push(poll);
+
+        // Update the local sideData array
+        options.forEach((option) => {
+          sideData.push(option);
+        });
+
+        // Write the updated data to the local JSON files
+        let pollDataJSON = JSON.stringify(pollData, null, 2);
+        let sideDataJSON = JSON.stringify(sideData, null, 2);
+
+        // Write the updated data to the poll.json file
+        fs.writeFileSync("./src/backend/table/poll.json", pollDataJSON);
+
+        // Write the updated data to the side.json file
+        fs.writeFileSync("./src/backend/table/side.json", sideDataJSON);
+
+        // Navigate back to the homepage
+      } catch (error) {
+        console.error("An error occurred while creating the poll:", error);
+      }finally{
+        this.$router.push("/polllist");
+      }
     },
   },
 };
 </script>
+
+<style>
+.container {
+  max-width: 600px;
+}
+</style>

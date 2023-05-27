@@ -9,14 +9,25 @@
             <h2 class="text-lg font-semibold">{{ poll.name }}</h2>
             <router-link to="/poll" @click="logPollId(poll.id)">
               <template v-if="isExpired(poll.startDate, poll.endDate)">
-                <button class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md">
-                  <span v-if="!isExpired(poll.endDate)">Vote</span>
-                  <span v-else>View</span>
+                <button
+                  v-if="!isExpired(poll.endDate)"
+                  class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md"
+                >
+                  <span>View</span>
+                </button>
+                <button
+                  v-else
+                  class="px-4 py-2 text-white bg-gray-300 cursor-not-allowed rounded-md"
+                  disabled
+                >
+                  <span>Not Open Yet</span>
                 </button>
               </template>
               <template v-else>
-                <button class="px-4 py-2 text-white bg-gray-300 cursor-not-allowed rounded-md" disabled>
-                  Not Open Yet
+                <button
+                  class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded-md"
+                >
+                  Vote
                 </button>
               </template>
             </router-link>

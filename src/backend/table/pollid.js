@@ -1,1 +1,1 @@
-export let pollid ="00";
+export let pollid = "00";

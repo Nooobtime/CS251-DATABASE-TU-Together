@@ -1,23 +1,2 @@
 [
-  {
-    "id": "0000000001",
-    "name": "poll test 1",
-    "info": "poll test 1 info",
-    "startDate": "2023-01-01",
-    "endDate": "2023-01-02"
-  },
-  {
-    "id": "0000000002",
-    "name": "poll test 2",
-    "info": "poll test 2 info",
-    "startDate": "2023-01-01",
-    "endDate": "2023-12-31"
-  },
-  {
-    "id": "0000000002",
-    "name": "poll test 3",
-    "info": "poll test 2 info",
-    "startDate": "2023-07-01",
-    "endDate": "2023-12-31"
-  }
 ]
