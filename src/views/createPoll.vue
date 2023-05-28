@@ -193,6 +193,7 @@ export default {
       console.log(cookiePolls);
       console.log(cookieSides);
       this.$router.push("/polllist");
+      alert("poll has been create!");
     },
   },
 };

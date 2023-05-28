@@ -41,11 +41,13 @@
                         active ? 'ring-2 ring-indigo-500' : '',
                         'group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6',
                       ]"
+                      @click="selectedSide = side.id"
                     >
                       <RadioGroupLabel as="span">{{ side.id }}</RadioGroupLabel>
                       <span
                         :class="[
-                          active ? 'border' : 'border-2',
+                          'border-2',
+                          active ? 'border-indigo-500' : 'border-transparent',
                           checked ? 'border-indigo-500' : 'border-transparent',
                           'pointer-events-none absolute -inset-px rounded-md',
                         ]"
@@ -110,85 +112,54 @@
 import VueCookie from "vue-cookie";
 import { RadioGroup, RadioGroupLabel, RadioGroupOption } from "@headlessui/vue";
 
-let cookiePollsString = VueCookie.get("cookiePolls");
-let cookieSidesString = VueCookie.get("cookieSides");
-let cookiePollIdString = VueCookie.get("cookiePollId");
-let cookiePolls = cookiePollsString ? JSON.parse(cookiePollsString) : [];
-let cookieSides = cookieSidesString ? JSON.parse(cookieSidesString) : [];
-let cookiePollId = cookiePollIdString ? JSON.parse(cookiePollIdString) : [];
-let pollId = cookiePollId;
-let tempPollName = "no";
-let tempPollDescription = "no";
+const selectedSide = 1;
+const cookiePolls = JSON.parse(VueCookie.get("cookiePolls") ?? "[]");
+const cookieSides = JSON.parse(VueCookie.get("cookieSides") ?? "[]");
+const cookiePollId = JSON.parse(VueCookie.get("cookiePollId") ?? "[]");
+const cookieVotes = JSON.parse(VueCookie.get("cookieVotes") ?? "[]");
 
-for (let i = 0; i < cookiePolls.length; i++) {
-  if (cookiePolls[i].id === pollId) {
-    tempPollName = cookiePolls[i].name;
-    tempPollDescription = cookiePolls[i].info;
-  }
-}
+const { name: pollName, info: pollDescription } = cookiePolls.find(
+  (poll) => poll.id === cookiePollId
+) || { name: "no", info: "no" };
 
-const pollName = tempPollName;
-const pollDescription = tempPollDescription;
-const pollSides = cookieSides.filter((item) => item.poll_id === pollId);
-const pollStartDate = cookiePolls.find((poll) => poll.id === pollId)?.startDate;
-const pollEndDate = cookiePolls.find((poll) => poll.id === pollId)?.endDate;
+const pollSides = cookieSides.filter((item) => item.poll_id === cookiePollId);
+const pollStartDate = cookiePolls.find(
+  (poll) => poll.id === cookiePollId
+)?.startDate;
+const pollEndDate = cookiePolls.find(
+  (poll) => poll.id === cookiePollId
+)?.endDate;
 
-const isPollOpen = () => {
-  const now = new Date();
-  const startDate = new Date(pollStartDate);
-  const endDate = new Date(pollEndDate);
-  return now >= startDate && now <= endDate;
-};
+const now = new Date();
+const startDate = new Date(pollStartDate);
+const endDate = new Date(pollEndDate);
+
+const isPollOpen = now >= startDate && now <= endDate;
 
 const vote = () => {
-  const userDataString = VueCookie.get("TUTogetherUserData");
-  let userData;
-  let userid;
-  try {
-    userData = JSON.parse(userDataString);
-    userid = userData.username;
-  } catch (error) {
-    console.error("Error parsing JSON:", error);
-  }
-  if (checkIfUserVoted(pollVotes, userid, pollId)) {
-    alert("You have already voted for this poll.");
-  } else {
-    const selectedOption = pollSides.find((side) => side.checked);
-    if (!selectedOption) {
-      alert("Please select an option before voting.");
-      return;
-    }
+  const userId = VueCookie.get("username")?.toString() ?? "";
+  const userAlreadyVoted = cookieVotes.some(
+    (vote) => vote.user_id === userId && vote.poll_id === cookiePollId
+  );
 
-    const sideId = selectedOption.id;
-    const voteData = {
-      user_id: userid,
-      poll_id: pollId,
-      side_id: sideId,
+  if (userAlreadyVoted) {
+    alert("You already voted!");
+  }
+
+  if (!userAlreadyVoted) {
+    const newVote = {
+      user_id: userId,
+      poll_id: cookiePollId,
+      side_id: selectedSide,
     };
 
-    let cookieVotesString = VueCookie.get("cookieVotes");
-    let cookieVotes = cookieVotesString ? JSON.parse(cookieVotesString) : [];
-    cookieVotes.push(voteData);
+    cookieVotes.push(newVote);
     VueCookie.set("cookieVotes", JSON.stringify(cookieVotes), {
       expires: "1d",
     });
-
-    alert("Vote submitted!");
+    console.log("Vote appended:", newVote);
   }
 };
-
-const pollVotes = VueCookie.get("cookieVotes")
-  ? JSON.parse(VueCookie.get("cookieVotes"))
-  : [];
-
-function checkIfUserVoted(pollVotes, userId, pollId) {
-  for (let i = 0; i < pollVotes.length; i++) {
-    if (pollVotes[i].user_id === userId && pollVotes[i].poll_id === pollId) {
-      return true; // User has voted in the poll
-    }
-  }
-  return false; // User has not voted in the poll
-}
 </script>
 
 <style>

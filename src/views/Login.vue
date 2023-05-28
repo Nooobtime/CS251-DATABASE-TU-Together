@@ -96,7 +96,8 @@ export default {
           let userData = response.data;
           VueCookie.set("TUTogetherUserData", userData, { expires: "1d" });
           this.$router.push("/");
-          console.log(userData);
+          VueCookie.set("username", userData.username, { expires: "1d" });
+          console.log(userData.username);
         })
         .catch((error) => {
           console.error(error);
@@ -177,6 +178,11 @@ export default {
           poll_id: "0000000001",
           side_id: "1",
         },
+        {
+          user_id: "6409650089",
+          poll_id: "0000000002",
+          side_id: "1",
+        },
       ];
       VueCookie.set("cookieVotes", JSON.stringify(votes));
       VueCookie.set("cookiePolls", JSON.stringify(polls));
@@ -186,7 +192,6 @@ export default {
     getUserData() {
       // Get the userData cookie
       let storedData = VueCookie.get("TUTogetherUserData");
-      console.log(storedData.username)
       if (storedData) {
         alert("already login");
         this.$router.push("/");
