@@ -1,70 +1,107 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "test";
+function getConnection()
+{
+    $servername = "localhost";
+    $username = "root";
+    $password = ""; // Replace with your database password
+    $dbname = "test";
 
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
-} catch (PDOException $e) {
-    error_log("Connection failed: " . $e->getMessage());
+    // Create a connection to the database
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Reset the auto-increment value for poll table
+    $conn->query("ALTER TABLE poll AUTO_INCREMENT = 1");
+
+    return $conn;
 }
 
+// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pollName = $_POST["pollName"];
-    $pollInfo = $_POST["pollInfo"];
-    $optionsList = $_POST["options"];
+    $conn = getConnection();
 
-    $conn->beginTransaction();
+    // Retrieve form data
+    $pollName = isset($_POST["pollName"]) ? $_POST["pollName"] : "";
+    $pollInfo = isset($_POST["pollInfo"]) ? $_POST["pollInfo"] : "";
+    $startDate = isset($_POST["startDate"]) ? $_POST["startDate"] : "";
+    $endDate = isset($_POST["endDate"]) ? $_POST["endDate"] : "";
+    $options = isset($_POST["options"]) ? $_POST["options"] : [];
 
-    try {
-        $stmt = $conn->prepare("INSERT INTO poll (name, info) VALUES (:name, :info)");
-        $stmt->execute(['name' => $pollName, 'info' => $pollInfo]);
-        $pollId = $conn->lastInsertId();
+    // Insert poll into the database
+    $sql = "INSERT INTO poll (question, created_at, startDate, endDate) VALUES (?, NOW(), ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $pollName, $startDate, $endDate);
+    $stmt->execute();
+    $pollId = $stmt->insert_id;
 
-        $stmt = $conn->prepare("INSERT INTO side (poll_id, name, info) VALUES (:pollId, :name, :info)");
-
-        foreach ($optionsList as $option) {
-            $optionName = $option['name'];
-            $optionDescription = $option['description'];
-            $stmt->execute(['pollId' => $pollId, 'name' => $optionName, 'info' => $optionDescription]);
-        }
-
-        $conn->commit();
-        echo "Poll has been created!";
-    } catch (PDOException $e) {
-        $conn->rollBack();
-        error_log("Error creating poll: " . $e->getMessage());
+    // Insert options into the database
+    $sql = "INSERT INTO option (id, poll_id, name, info) VALUES (DEFAULT, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    foreach ($options as $option) {
+        $optionName = $option["name"];
+        $optionDescription = $option["description"];
+        $stmt->bind_param("iss", $pollId, $optionName, $optionDescription);
+        $stmt->execute();
     }
+
+    // Close the database connection
+    $stmt->close();
+    $conn->close();
+
+    // Provide feedback message
+    $feedbackMessage = "Poll created successfully!";
 }
 ?>
 
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Create Poll</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
+<?php include './components/navComponents.php'; ?>
+
     <div class="min-h-screen bg-gray-100">
         <div class="container mx-auto py-8">
             <h1 class="text-3xl font-bold mb-6">Create Poll</h1>
+
+            <?php if (!empty($feedbackMessage)): ?>
+                <div class="bg-green-200 text-green-800 font-semibold px-4 py-2 rounded mb-4">
+                    <?php echo $feedbackMessage; ?>
+                </div>
+            <?php endif; ?>
 
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <div class="bg-white shadow-md rounded-md p-6 mb-6">
                     <div class="mb-4">
                         <label for="pollName" class="font-semibold mb-1 mr-2">Poll Name:</label>
                         <input type="text" name="pollName" placeholder="Enter poll name"
-                            class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500" required />
+                            class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+                            required />
                     </div>
 
                     <div class="mb-4">
                         <label for="pollInfo" class="block font-semibold mb-1">Poll Info:</label>
                         <input type="text" name="pollInfo" placeholder="Enter poll information"
-                            class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500" required />
+                            class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+                            required />
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="startDate" class="font-semibold mb-1 mr-2">Start Date:</label>
+                        <input type="date" name="startDate" class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="endDate" class="font-semibold mb-1 mr-2">End Date:</label>
+                        <input type="date" name="endDate" class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500" required />
                     </div>
 
                     <div>
@@ -72,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <li>
                                 <div class="flex items-center">
                                     <input type="text" name="options[0][name]" placeholder="Enter option name"
-                                        class="border border-gray-300 rounded py-2 px-3 flex-grow focus:outline-none focus:ring-blue-500" />
+                                        class="border border-gray-300 rounded py-2 px-3 flex-grow ml-2 focus:outline-none focus:ring-blue-500" />
                                     <input type="text" name="options[0][description]"
                                         placeholder="Enter option description"
                                         class="border border-gray-300 rounded py-2 px-3 flex-grow ml-2 focus:outline-none focus:ring-blue-500" />
@@ -103,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             var listItem = document.createElement("li");
             listItem.innerHTML = '<div class="flex items-center">' +
                 '<input type="text" name="options[' + optionIndex + '][name]" placeholder="Enter option name" ' +
-                'class="border border-gray-300 rounded py-2 px-3 flex-grow focus:outline-none focus:ring-blue-500" />' +
+                'class="border border-gray-300 rounded py-2 px-3 flex-grow ml-2 focus:outline-none focus:ring-blue-500" />' +
                 '<input type="text" name="options[' + optionIndex + '][description]" ' +
                 'placeholder="Enter option description" ' +
                 'class="border border-gray-300 rounded py-2 px-3 flex-grow ml-2 focus:outline-none focus:ring-blue-500" />' +
@@ -130,4 +167,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </script>
 </body>
+
 </html>

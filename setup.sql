@@ -5,15 +5,15 @@ CREATE TABLE user (
 );
 
 CREATE TABLE poll (
-  id INT PRIMARY KEY,
-  name VARCHAR(50),
-  info VARCHAR(500),
-  CONSTRAINT uq_poll_id UNIQUE (id)
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  question VARCHAR(255),
+  created_at TIMESTAMP,
+  startDate DATE,
+  endDate DATE
 );
 
-
-CREATE TABLE side (
-  id VARCHAR(10) PRIMARY KEY,
+CREATE TABLE option (
+  id INT PRIMARY KEY AUTO_INCREMENT,
   poll_id INT,
   name VARCHAR(255),
   info VARCHAR(500),
@@ -23,8 +23,9 @@ CREATE TABLE side (
 CREATE TABLE vote (
   user_id VARCHAR(10),
   poll_id INT,
-  side_id VARCHAR(10),
+  option_id INT,
+  PRIMARY KEY (user_id, poll_id),
   FOREIGN KEY (user_id) REFERENCES user(id),
   FOREIGN KEY (poll_id) REFERENCES poll(id),
-  FOREIGN KEY (side_id) REFERENCES side(id)
+  FOREIGN KEY (option_id) REFERENCES option(id)
 );
