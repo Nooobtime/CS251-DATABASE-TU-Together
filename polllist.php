@@ -59,7 +59,8 @@
     deletePoll($pollId);
   }
 
-  function deletePoll($pollId) {
+  function deletePoll($pollId)
+  {
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -85,6 +86,7 @@
   ?>
 
   <script>
+
     // Use the poll data fetched from PHP
     const pollsData = <?php echo json_encode($polls); ?>;
 
@@ -105,14 +107,15 @@
             console.log(data);
             // Refresh the poll list after successful deletion
             renderPolls(pollsData.filter(poll => poll.id !== pollId));
+            location.reload(); // Reload the page
           })
           .catch(error => console.log(error));
       }
-      window.location.href = "./polllist.php";
     }
 
+
     // Use the poll data fetched from PHP
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       renderPolls(pollsData);
     });
 

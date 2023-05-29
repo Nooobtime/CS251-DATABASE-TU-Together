@@ -61,8 +61,10 @@ try {
 
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="path/to/optimized-styles.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.x"></script>
@@ -93,6 +95,7 @@ try {
         }
     </style>
 </head>
+
 <body>
     <?php include './components/navComponents.php'; ?>
 
@@ -103,7 +106,9 @@ try {
                     <div class="md:flex md:justify-between md:items-center">
                         <div>
                             <h2 class="text-xl text-gray-800 font-bold leading-tight">Poll Name</h2>
-                            <p class="mb-2 text-gray-600 text-sm"><?php echo $winnerText; ?></p>
+                            <p class="mb-2 text-gray-600 text-sm">
+                                <?php echo $winnerText; ?>
+                            </p>
                         </div>
 
                         <!-- Legends -->
@@ -195,4 +200,5 @@ try {
         </script>
     </div>
 </body>
+
 </html>

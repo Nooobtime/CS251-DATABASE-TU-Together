@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-<?php include './components/navComponents.php'; ?>
+    <?php include './components/navComponents.php'; ?>
 
     <div class="min-h-screen bg-gray-100">
         <div class="container mx-auto py-8">
@@ -93,15 +93,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             class="w-full border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
                             required />
                     </div>
-                    
+
                     <div class="mb-4">
                         <label for="startDate" class="font-semibold mb-1 mr-2">Start Date:</label>
-                        <input type="date" name="startDate" class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500" required />
+                        <input type="date" name="startDate"
+                            class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+                            required />
                     </div>
 
                     <div class="mb-4">
                         <label for="endDate" class="font-semibold mb-1 mr-2">End Date:</label>
-                        <input type="date" name="endDate" class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500" required />
+                        <input type="date" name="endDate"
+                            class="border border-gray-300 rounded py-2 px-3 focus:outline-none focus:ring-blue-500"
+                            required />
                     </div>
 
                     <div>
@@ -133,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <script>
+
         // Add option button click handler
         document.getElementById("addOptionBtn").addEventListener("click", function () {
             var optionsList = document.getElementById("options-list");
