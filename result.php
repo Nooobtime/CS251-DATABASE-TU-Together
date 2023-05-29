@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 $servername = "localhost";
 $username = "root";
@@ -30,14 +29,24 @@ try {
     foreach ($votes as $vote) {
         $optionId = $vote['option_id'];
         $count = $vote['count'];
-        $voteCounts[$optionId] = $count;
+
+        // Fetch the option name from the database
+        $stmt = $conn->prepare("SELECT name FROM option WHERE id = :option_id");
+        $stmt->bindParam(':option_id', $optionId);
+        $stmt->execute();
+        $optionName = $stmt->fetchColumn();
+
+        $voteCounts[$optionId] = [
+            'count' => $count,
+            'name' => $optionName
+        ];
     }
 
     // Get the highest vote count
-    $maxVotes = max($voteCounts);
+    $maxVotes = max(array_column($voteCounts, 'count'));
 
     // Check if there is a single winner or a draw
-    $winners = array_keys($voteCounts, $maxVotes);
+    $winners = array_keys(array_column($voteCounts, 'count'), $maxVotes);
     $winnerText = '';
     if (count($winners) === 1) {
         $winnerText = 'Winner: Option ' . $winners[0];
@@ -49,8 +58,6 @@ try {
     die("Failed to retrieve vote counts: " . $e->getMessage());
 }
 ?>
-=======
->>>>>>> ea976357d059028ffd1859cb62a814dbc4e71489
 
 <!DOCTYPE html>
 <html>
@@ -127,13 +134,13 @@ try {
 
                         <!-- Bar Chart -->
                         <div class="flex -mx-2 items-end mb-2">
-                            <template x-for="data in selected">
+                            <template x-for="(data, index) in selected">
                                 <div class="px-2 w-1/6">
-                                    <div :style="`height: ${data}px`"
+                                    <div :style="`height: ${data.count}px`"
                                         class="transition ease-in duration-200 bg-blue-600 hover:bg-blue-400 relative"
-                                        @mouseenter="showTooltip($event); tooltipOpen = true"
+                                        @mouseenter="showTooltip($event, data.name); tooltipOpen = true"
                                         @mouseleave="hideTooltip($event)">
-                                        <div x-text="data"
+                                        <div x-text="data.count"
                                             class="text-center absolute top-0 left-0 right-0 -mt-6 text-gray-800 text-sm">
                                         </div>
                                     </div>
@@ -141,17 +148,16 @@ try {
                             </template>
                         </div>
 
-<<<<<<< HEAD
                         <!-- Labels -->
                         <div class="border-t border-gray-400 mx-auto"
                             :style="`height: 1px; width: ${100 - 1/selected.length * 100 + 3}%`"></div>
                         <div class="flex -mx-2 items-end">
-                            <template x-for="data in options">
+                            <template x-for="(data, index) in options">
                                 <div class="px-2 w-1/6">
                                     <div class="bg-red-600 relative">
                                         <div class="text-center absolute top-0 left-0 right-0 h-2 -mt-px bg-gray-400 mx-auto"
                                             style="width: 1px"></div>
-                                        <div x-text="data"
+                                        <div x-text="data.name"
                                             class="text-center absolute top-0 left-0 right-0 mt-3 text-gray-700 text-sm">
                                         </div>
                                     </div>
@@ -167,14 +173,14 @@ try {
             function app() {
                 return {
                     selected: <?php echo json_encode(array_values($voteCounts)); ?>,
-                    options: <?php echo json_encode(array_keys($voteCounts)); ?>,
+                    options: <?php echo json_encode(array_values($voteCounts)); ?>,
 
                     tooltipContent: '',
                     tooltipOpen: false,
                     tooltipX: 0,
                     tooltipY: 0,
-                    showTooltip(e) {
-                        this.tooltipContent = e.target.textContent;
+                    showTooltip(e, content) {
+                        this.tooltipContent = content;
                         this.tooltipX = e.target.offsetLeft - e.target.clientWidth;
                         this.tooltipY = e.target.clientHeight + e.target.clientWidth;
                     },
@@ -190,44 +196,3 @@ try {
     </div>
 </body>
 </html>
-=======
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "your_database_name";
-function getResult($pollId){
-  try {
-    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Prepare the SQL query
-    $sql = "SELECT side_id FROM side WHERE poll_id = $pollId ";
-
-    // Execute the query
-    $stmt = $conn->query($sql);
-
-    // Fetch all the rows as an associative array
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Close the database connection
-    $conn = null;
-
-    // Print the array for demonstration
-    print_r($result);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}var $j = 1;
-foreach($result as $side){
-  $query = "SELECT * FROM vote WHERE side_id =$side" ;
-  $result = mysqli_query($conn, $sql);  
-  echo "result poll " $j "is" $result;
-  echo '<br>'
-  $j++;
-}
-}
-
-?>
-
-
->>>>>>> ea976357d059028ffd1859cb62a814dbc4e71489

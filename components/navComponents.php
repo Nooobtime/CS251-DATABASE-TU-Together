@@ -44,6 +44,8 @@
                 class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">POLL</a>
               <a href="createpoll.php"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">CREATE</a>
+              <a href="#" onclick="logout()"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">LOGOUT</a>
             </div>
           </div>
         </div>
@@ -63,6 +65,8 @@
           class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">POLL</a>
         <a href="createpoll.php"
           class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">CREATE</a>
+        <a href="#" onclick="logout()"
+          class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">LOGOUT</a>
       </div>
     </div>
     <script>
@@ -74,7 +78,40 @@
         mobileMenuButton.setAttribute('aria-expanded', !expanded);
         mobileMenu.classList.toggle('hidden');
       });
+      function getCookie(name) {
+        var cookieName = name + "=";
+        var cookieArray = document.cookie.split(';');
+        for (var i = 0; i < cookieArray.length; i++) {
+          var cookie = cookieArray[i].trim();
+          if (cookie.indexOf(cookieName) === 0) {
+            return cookie.substring(cookieName.length, cookie.length);
+          }
+        }
+        return null;
+      }
+
+      function checkCookie() {
+        var userData = getCookie("TUTogetherUserData");
+        if (!userData) {
+          alert("Please login first.");
+          window.location.href = "./login.php";
+        }
+      }
+
+      checkCookie();
+      function eraseCookie(name) {
+        document.cookie = name + '=; Max-Age=-99999999; path=/';
+      }
+
+      function logout() {
+        // Delete the "TUTogetherUserData" cookie
+        eraseCookie("TUTogetherUserData");
+
+        // Perform logout logic or redirect to the logout page
+        alert("Logout successful!");
+        window.location.href = "./login.php"; // Replace with your logout page URL or logic
+      }
     </script>
-   
+
   </nav>
   <div class="mb-20"></div>

@@ -55,21 +55,21 @@
 
             axios.post(
                 "https://restapi.tu.ac.th/api/v1/auth/Ad/verify2", {
-                    UserName: username,
-                    PassWord: password,
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Application-Key": "TUdf7e79f1e0c5d3c9b2ec2f0e3a020b3304e430a0d5da9bb391acf6266e2c8fc3609c8ae07c5c9ea42e487b8eeb1af452",
-                    },
-                }
-            ).then(function(response) {
+                UserName: username,
+                PassWord: password,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Application-Key": "TUdf7e79f1e0c5d3c9b2ec2f0e3a020b3304e430a0d5da9bb391acf6266e2c8fc3609c8ae07c5c9ea42e487b8eeb1af452",
+                },
+            }
+            ).then(function (response) {
                 var userData = response.data;
                 setCookie("TUTogetherUserData", JSON.stringify(userData), 1);
                 window.location.href = "./home.php";
                 setCookie("username", userData.username, 1);
                 console.log(userData.username);
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.error(error);
                 var errorMessage = error.response.data.message;
                 document.getElementById("error").textContent = errorMessage;

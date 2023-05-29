@@ -108,6 +108,7 @@
           })
           .catch(error => console.log(error));
       }
+      window.location.href = "./polllist.php";
     }
 
     // Use the poll data fetched from PHP
