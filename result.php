@@ -18,8 +18,8 @@ if ($pollId === null) {
 }
 
 try {
-    $stmt = $conn->prepare("SELECT option.id AS option_id, COUNT(*) AS count FROM vote 
-                            INNER JOIN option ON vote.option_id = option.id
+    $stmt = $conn->prepare("SELECT option.option_id, COUNT(*) AS count FROM vote 
+                            INNER JOIN `option` ON vote.option_id = `option`.option_id
                             WHERE vote.poll_id = :poll_id GROUP BY vote.option_id");
     $stmt->bindParam(':poll_id', $pollId);
     $stmt->execute();
@@ -31,7 +31,7 @@ try {
         $count = $vote['count'];
 
         // Fetch the option name from the database
-        $stmt = $conn->prepare("SELECT name FROM option WHERE id = :option_id");
+        $stmt = $conn->prepare("SELECT option_name FROM `option` WHERE option_id = :option_id");
         $stmt->bindParam(':option_id', $optionId);
         $stmt->execute();
         $optionName = $stmt->fetchColumn();
@@ -106,9 +106,7 @@ try {
                     <div class="md:flex md:justify-between md:items-center">
                         <div>
                             <h2 class="text-xl text-gray-800 font-bold leading-tight">Poll Name</h2>
-                            <p class="mb-2 text-gray-600 text-sm">
-                                <?php echo $winnerText; ?>
-                            </p>
+
                         </div>
 
                         <!-- Legends -->
@@ -141,7 +139,7 @@ try {
                         <div class="flex -mx-2 items-end mb-2">
                             <template x-for="(data, index) in selected">
                                 <div class="px-2 w-1/6">
-                                    <div :style="`height: ${data.count}px`"
+                                    <div :style="`height: ${(data.count)*10}px`"
                                         class="transition ease-in duration-200 bg-blue-600 hover:bg-blue-400 relative"
                                         @mouseenter="showTooltip($event, data.name); tooltipOpen = true"
                                         @mouseleave="hideTooltip($event)">
@@ -156,8 +154,8 @@ try {
                         <!-- Labels -->
                         <div class="border-t border-gray-400 mx-auto"
                             :style="`height: 1px; width: ${100 - 1/selected.length * 100 + 3}%`"></div>
-                        <div class="flex -mx-2 items-end">
-                            <template x-for="(data, index) in options">
+                        <div class="flex -mx-6 items-end ">
+                            <template class="" x-for="(data, index) in options">
                                 <div class="px-2 w-1/6">
                                     <div class="bg-red-600 relative">
                                         <div class="text-center absolute top-0 left-0 right-0 h-2 -mt-px bg-gray-400 mx-auto"
@@ -200,5 +198,6 @@ try {
         </script>
     </div>
 </body>
+<?php include './components/footerComponents.php'; ?>
 
 </html>

@@ -18,20 +18,20 @@ try {
 // Function to retrieve poll details from the database
 function getPollDetails($pollId, $conn)
 {
-    $sql = "SELECT * FROM poll WHERE id = :pollId";
+    $sql = "SELECT * FROM poll WHERE poll_id = :pollId";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':pollId', $pollId, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($result) {
-        $id = $result['id'];
-        $question = $result['question'];
-        $createdAt = $result['created_at'];
-        $startDate = $result['startDate'];
-        $endDate = $result['endDate'];
+        $id = $result['poll_info'];
+        $question = $result['poll_name'];
+        $createdAt = $result['poll_created_at'];
+        $startDate = $result['poll_startDate'];
+        $endDate = $result['poll_endDate'];
 
-        $optionSql = "SELECT * FROM option WHERE poll_id = :pollId";
+        $optionSql = "SELECT * FROM `option` WHERE poll_id = :pollId";
         $optionStmt = $conn->prepare($optionSql);
         $optionStmt->bindParam(':pollId', $pollId, PDO::PARAM_INT);
         $optionStmt->execute();
@@ -54,7 +54,7 @@ function getPollDetails($pollId, $conn)
 function addVote($pollId, $optionId, $userId, $conn)
 {
     // Check if the user has already voted in the poll
-    $voteCheckSql = "SELECT * FROM vote WHERE user_id = :userId AND poll_id = :pollId";
+    $voteCheckSql = "SELECT * FROM vote WHERE user_username = :userId AND poll_id = :pollId";
     $voteCheckStmt = $conn->prepare($voteCheckSql);
     $voteCheckStmt->bindParam(':userId', $userId, PDO::PARAM_STR);
     $voteCheckStmt->bindParam(':pollId', $pollId, PDO::PARAM_INT);
@@ -66,7 +66,7 @@ function addVote($pollId, $optionId, $userId, $conn)
     }
 
     // Insert the vote into the database
-    $sql = "INSERT INTO vote (user_id, poll_id, option_id) VALUES (:userId, :pollId, :optionId)";
+    $sql = "INSERT INTO vote (user_username, poll_id, option_id) VALUES (:userId, :pollId, :optionId)";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
     $stmt->bindParam(':pollId', $pollId, PDO::PARAM_INT);
@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['vote']) && $_POST['vo
 
     $pollId = $_POST['pollId'];
     $optionId = $_POST['optionId'];
-    $userId = $_COOKIE['username'] ?? '';
+    $userId = $_COOKIE['user_username'] ?? '';
 
     // Add the vote to the database
     $voteAdded = addVote($pollId, $optionId, $userId, $conn);
@@ -144,7 +144,7 @@ $_SESSION['csrf_token'] = $csrfToken;
 </head>
 
 <body>
-    <?php include './components/navComponents.php'; ?>
+<?php include './components/navComponents.php'; ?>
 
     <div class="bg-white">
         <div>
@@ -171,9 +171,9 @@ $_SESSION['csrf_token'] = $csrfToken;
                                     <div>
                                         <label
                                             class="cursor-pointer bg-white text-gray-900 shadow-sm group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6">
-                                            <input type="radio" name="optionId" value="<?php echo $option['id']; ?>">
+                                            <input type="radio" name="optionId" value="<?php echo $option['option_id']; ?>">
                                             <span>
-                                                <?php echo $option['name']; ?>
+                                                <?php echo $option['option_name']; ?>
                                             </span>
                                         </label>
                                     </div>
@@ -218,7 +218,7 @@ $_SESSION['csrf_token'] = $csrfToken;
                                 <?php foreach ($options as $option): ?>
                                     <li class="text-gray-400">
                                         <span class="text-gray-600">
-                                            <?php echo $option['id'] . ' ' . $option['name'] . ' Info: ' . $option['info']; ?>
+                                            <?php echo $option['option_name'] . ' Info: ' . $option['option_info']; ?>
                                         </span>
                                     </li>
                                 <?php endforeach; ?>
@@ -264,16 +264,17 @@ $_SESSION['csrf_token'] = $csrfToken;
                         alert('Vote submitted successfully');
                         location.reload();
                     } else {
-                        throw new Error('User already vote!');
+                        throw new Error('User already voted!');
                     }
                 })
                 .catch(error => {
                     alert('Failed to submit vote');
                 });
-            window.location.href = "./polllist.php";
-
+                window.location.href = "./polllist.php";
+        
         }
     </script>
 </body>
+<?php include './components/footerComponents.php'; ?>
 
 </html>

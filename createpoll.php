@@ -31,30 +31,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endDate = isset($_POST["endDate"]) ? $_POST["endDate"] : "";
     $options = isset($_POST["options"]) ? $_POST["options"] : [];
 
-    // Insert poll into the database
-    $sql = "INSERT INTO poll (question, created_at, startDate, endDate) VALUES (?, NOW(), ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $pollName, $startDate, $endDate);
-    $stmt->execute();
-    $pollId = $stmt->insert_id;
-
-    // Insert options into the database
-    $sql = "INSERT INTO option (id, poll_id, name, info) VALUES (DEFAULT, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    foreach ($options as $option) {
-        $optionName = $option["name"];
-        $optionDescription = $option["description"];
-        $stmt->bind_param("iss", $pollId, $optionName, $optionDescription);
+    // Validate start date and end date
+    if ($startDate >= $endDate) {
+        $feedbackMessage = "Error: Start date must be before end date.";
+    } else {
+        // Insert poll into the database
+        $sql = "INSERT INTO poll (poll_name, poll_info, poll_startDate, poll_endDate) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $pollName, $pollInfo, $startDate, $endDate);
         $stmt->execute();
+        $pollId = $stmt->insert_id;
+
+        // Insert options into the database
+        $sql = "INSERT INTO `option` (poll_id, option_name, option_info) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        foreach ($options as $option) {
+            $optionName = $option["name"];
+            $optionInfo = $option["description"];
+            $stmt->bind_param("iss", $pollId, $optionName, $optionInfo);
+            $stmt->execute();
+        }
+
+        // Close the database connection
+        $stmt->close();
+        $conn->close();
+
+        // Provide feedback message
+        $feedbackMessage = "Poll created successfully!";
     }
-
-    // Close the database connection
-    $stmt->close();
-    $conn->close();
-
-    // Provide feedback message
-    $feedbackMessage = "Poll created successfully!";
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -135,6 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
         </div>
     </div>
+    <?php include './components/footerComponents.php'; ?>
 
     <script>
 

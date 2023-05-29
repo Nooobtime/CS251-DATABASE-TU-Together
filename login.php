@@ -1,18 +1,50 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Page Title</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/vue-cookie@1.1.4/dist/vue-cookie.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
-
 <body>
-    <div class="flex min-h-full flex-1 flex-col justify-center items-center px-6 lg:px-8">
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $servername = "localhost";
+        $dbusername = "root";
+        $dbpassword = "";
+        $dbname = "test";
+
+        // Create a new database connection
+        $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Database connection failed: " . $conn->connect_error);
+        }
+
+        $isAdmin = 0; // Set the isAdmin flag to 1
+
+        // Prepare and execute the SQL statement to insert the user
+        $stmt = $conn->prepare("INSERT INTO `user` (`user_username`, `user_isAdmin`) VALUES (?, ?)");
+        $stmt->bind_param("si", $username, $isAdmin);
+
+        if ($stmt->execute()) {
+            echo "User inserted successfully!";
+        } else {
+            echo "Failed to insert user.";
+        }
+
+        // Close the database connection
+        $stmt->close();
+        $conn->close();
+    }
+    ?>
+
+    <div class="mt-36 flex min-h-full flex-1 flex-col justify-center items-center px-6 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img class="mx-auto h-20 w-auto" src="../assets/logo/TU_logo.png" alt="Your Company" />
+            <img class="mx-auto h-20 w-auto" src="./img/TU_logo.png" alt="Your Company" />
             <h1 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 TU Together
             </h1>
@@ -53,8 +85,8 @@
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
 
-            axios.post(
-                "https://restapi.tu.ac.th/api/v1/auth/Ad/verify2", {
+            // Perform the login request
+            axios.post('https://restapi.tu.ac.th/api/v1/auth/Ad/verify2', {
                 UserName: username,
                 PassWord: password,
             }, {
@@ -62,12 +94,11 @@
                     "Content-Type": "application/json",
                     "Application-Key": "TUdf7e79f1e0c5d3c9b2ec2f0e3a020b3304e430a0d5da9bb391acf6266e2c8fc3609c8ae07c5c9ea42e487b8eeb1af452",
                 },
-            }
-            ).then(function (response) {
+            }).then(function (response) {
                 var userData = response.data;
                 setCookie("TUTogetherUserData", JSON.stringify(userData), 1);
-                window.location.href = "./home.php";
                 setCookie("username", userData.username, 1);
+                window.location.href = "./home.php";
                 console.log(userData.username);
             }).catch(function (error) {
                 console.error(error);
@@ -75,7 +106,15 @@
                 document.getElementById("error").textContent = errorMessage;
             });
 
-
+            // Additional code to insert the user into the database
+            axios.post(window.location.href, {
+                username: username,
+                password: password
+            }).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.error(error);
+            });
         }
 
         function setCookie(name, value, days) {
@@ -87,32 +126,6 @@
             }
             document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
-
-        function getCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        }
-
-        function eraseCookie(name) {
-            document.cookie = name + '=; Max-Age=-99999999;';
-        }
-
-        function checkCookie() {
-            var userData = getCookie("TUTogetherUserData");
-            if (userData) {
-                alert("Already logged in");
-                window.location.href = "./home.php";
-            }
-        }
-
-        checkCookie();
     </script>
 </body>
-
 </html>

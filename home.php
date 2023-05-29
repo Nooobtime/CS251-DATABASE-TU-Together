@@ -2,7 +2,7 @@
 $commentQuotes = [
   ['id' => 1, 'description' => 'เลือกสิ่งที่ถูกใจ ใช่กับตัวเรา', 'title' => 'เลือก'],
   ['id' => 2, 'description' => 'ไม่นอนหลับทับสิทธิ์', 'title' => 'ใช้สิทธิ์'],
-  ['id' => 3, 'description' => 'เกรด D ก็ได้', 'title' => 'ลงความเห็น']
+  ['id' => 3, 'description' => 'กล้าแสดงออก', 'title' => 'ลงความเห็น']
 ];
 ?>
 
@@ -35,7 +35,7 @@ $commentQuotes = [
         </div>
         <div class="relative mt-16 h-80 lg:mt-8">
           <img class="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
-            src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png" alt="App screenshot"
+            src="./img/poll.png" alt="App screenshot"
             width="1824" height="1080">
         </div>
       </div>
@@ -58,5 +58,6 @@ $commentQuotes = [
     </div>
   </div>
 </body>
+<?php include './components/footerComponents.php'; ?>
 
 </html>
